@@ -1,0 +1,2935 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🏃‍♂️🌲 ADVENTURE DECIMAL RUN — Lari, Jawab, dan Bertahan!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Fredoka', 'Nunito', sans-serif;
+            background: #0f172a;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* 3D Cartoon UI Styles */
+        .cartoon-panel {
+            background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+            border: 4px solid #1e293b;
+            box-shadow: 0 6px 0 #1e293b, 0 10px 20px rgba(0,0,0,0.35);
+            border-radius: 1.25rem;
+        }
+
+        .team-a-panel {
+            background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+            border: 4px solid #1d4ed8;
+            box-shadow: 0 6px 0 #1e3a8a, 0 10px 20px rgba(0,0,0,0.35);
+        }
+
+        .team-b-panel {
+            background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%);
+            border: 4px solid #b91c1c;
+            box-shadow: 0 6px 0 #7f1d1d, 0 10px 20px rgba(0,0,0,0.35);
+        }
+
+        .btn-3d-blue {
+            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+            border: 3px solid #1e3a8a;
+            box-shadow: 0 6px 0 #1e3a8a, inset 0 3px 0 rgba(255,255,255,0.4);
+            color: white;
+            transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+        }
+        .btn-3d-blue:hover:not(:disabled) {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #1e3a8a, inset 0 3px 0 rgba(255,255,255,0.5);
+        }
+        .btn-3d-blue:active:not(:disabled), .btn-3d-blue.selected {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #1e3a8a, inset 0 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-3d-red {
+            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+            border: 3px solid #7f1d1d;
+            box-shadow: 0 6px 0 #7f1d1d, inset 0 3px 0 rgba(255,255,255,0.4);
+            color: white;
+            transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+        }
+        .btn-3d-red:hover:not(:disabled) {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #7f1d1d, inset 0 3px 0 rgba(255,255,255,0.5);
+        }
+        .btn-3d-red:active:not(:disabled), .btn-3d-red.selected {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #7f1d1d, inset 0 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-3d-gold {
+            background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            border: 4px solid #78350f;
+            box-shadow: 0 8px 0 #78350f, 0 15px 25px rgba(0,0,0,0.4), inset 0 4px 0 rgba(255,255,255,0.5);
+            color: #451a03;
+            transition: all 0.12s ease;
+        }
+        .btn-3d-gold:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 11px 0 #78350f, 0 20px 30px rgba(0,0,0,0.45), inset 0 4px 0 rgba(255,255,255,0.6);
+        }
+        .btn-3d-gold:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #78350f, inset 0 2px 0 rgba(255,255,255,0.4);
+        }
+
+        .btn-selected-ring {
+            outline: 4px solid #facc15;
+            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%) !important;
+        }
+
+        /* Animations */
+        @keyframes pulse-urgent {
+            0%, 100% { transform: scale(1); background-color: #ef4444; }
+            50% { transform: scale(1.16); background-color: #991b1b; }
+        }
+        .timer-urgent {
+            animation: pulse-urgent 0.45s infinite ease-in-out;
+            color: #ffffff !important;
+            border-color: #fef08a !important;
+        }
+
+        @keyframes screen-shake {
+            0%, 100% { transform: translate(0, 0); }
+            20% { transform: translate(-4px, 3px); }
+            40% { transform: translate(4px, -3px); }
+            60% { transform: translate(-3px, -2px); }
+            80% { transform: translate(3px, 2px); }
+        }
+        .shake-light {
+            animation: screen-shake 0.35s infinite;
+        }
+
+        @keyframes shake-heavy {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            15% { transform: translate(-10px, -6px) rotate(-1deg); }
+            30% { transform: translate(10px, 6px) rotate(1deg); }
+            45% { transform: translate(-8px, 5px) rotate(-0.5deg); }
+            60% { transform: translate(8px, -5px) rotate(0.5deg); }
+            75% { transform: translate(-5px, 3px) rotate(0deg); }
+        }
+        .shake-heavy {
+            animation: shake-heavy 0.45s ease-in-out;
+        }
+
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        .float-anim {
+            animation: float-badge 2s ease-in-out infinite;
+        }
+
+        .text-stroke-dark {
+            text-shadow: 0 3px 0 #1e293b, 0 -1px 0 #1e293b, 2px 0 0 #1e293b, -2px 0 0 #1e293b;
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen w-screen overflow-hidden select-none bg-slate-900">
+
+    <!-- =========================================================================
+         1. BAGIAN ATAS (TOP HUD BAR - TIDAK MENUTUPI KARAKTER)
+         ========================================================================= -->
+    <header id="topHud" class="h-[15vh] min-h-[82px] max-h-[115px] w-full bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-b-4 border-slate-950 px-3 py-1.5 flex items-center justify-between gap-2 z-20 shrink-0">
+        
+        <!-- 🔵 KELOMPOK A HUD -->
+        <div class="team-a-panel px-3 py-1.5 flex items-center gap-3 min-w-[250px] sm:min-w-[300px] justify-between relative">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 border-2 border-blue-900 flex items-center justify-center text-xl shadow-inner font-extrabold text-white">
+                    🔵
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-black text-blue-950 text-sm sm:text-base tracking-wide">KELOMPOK A</span>
+                        <span id="badgeA" class="hidden px-2 py-0.5 text-[11px] font-extrabold rounded-full bg-amber-400 text-amber-950 border border-amber-700 animate-bounce">
+                            ⚡ BOOST!
+                        </span>
+                    </div>
+                    <div id="heartsA" class="text-lg sm:text-xl tracking-widest leading-none mt-0.5" title="Nyawa Kelompok A">
+                        ❤️❤️❤️
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item & Score Kelompok A -->
+            <div class="flex items-center gap-2 bg-blue-950/10 px-2.5 py-1 rounded-xl border border-blue-900/20">
+                <div id="shieldIconA" class="hidden text-base" title="Shield Aktif (Pelindung 1 Kesalahan)">🛡️</div>
+                <div class="text-right">
+                    <div class="text-[10px] font-bold text-blue-900 uppercase leading-none">SKOR</div>
+                    <div id="scoreA" class="text-lg sm:text-xl font-black text-blue-700 leading-tight">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENTER PROGRESS & TIMER HUD -->
+        <div class="flex-1 max-w-2xl flex flex-col items-center justify-center px-2">
+            <!-- Top row: Question counter + Biome Title + Timer -->
+            <div class="w-full flex items-center justify-between gap-2 mb-1">
+                <div class="bg-slate-950/90 border-2 border-slate-700 px-3 py-0.5 rounded-xl flex items-center gap-2">
+                    <span class="text-amber-400 font-black text-xs sm:text-sm" id="questionCounterText">SOAL 1 / 15</span>
+                    <span class="text-slate-500">|</span>
+                    <span class="text-emerald-300 font-bold text-xs sm:text-sm truncate" id="biomeTitleText">🌲 AREA 1: HUTAN CERIA</span>
+                </div>
+
+                <!-- Timer Pill -->
+                <div id="timerBox" class="bg-amber-400 border-3 border-amber-900 px-3.5 py-0.5 rounded-xl flex items-center gap-1.5 shadow-md transition-all">
+                    <span class="text-base sm:text-lg">⏱️</span>
+                    <span id="timerValue" class="font-black text-lg sm:text-2xl text-amber-950 leading-none">10</span>
+                    <span class="text-[10px] font-extrabold text-amber-900 uppercase">dtk</span>
+                </div>
+
+                <!-- Audio Mute/Unmute + Fullscreen -->
+                <div class="flex items-center gap-1">
+                    <button id="btnToggleSound" onclick="game.toggleSound()" class="bg-slate-800 hover:bg-slate-700 text-white border-2 border-slate-600 rounded-xl px-2.5 py-1 text-sm font-bold" title="Suara Efek & Musik">
+                        🔊
+                    </button>
+                    <button onclick="game.toggleFullscreen()" class="bg-slate-800 hover:bg-slate-700 text-white border-2 border-slate-600 rounded-xl px-2.5 py-1 text-sm font-bold" title="Layar Penuh (Smart TV / Proyektor)">
+                        ⛶
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar: 🌲━━━━🌊━━━━🌴━━━━🏔️━━━━🏰━━━━💎 -->
+            <div class="w-full bg-slate-950/90 border-2 border-slate-700 rounded-full h-6 px-3 flex items-center justify-between relative overflow-hidden">
+                <!-- Progress Fill -->
+                <div id="progressFill" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-emerald-500 via-amber-400 to-cyan-400 opacity-35 transition-all duration-500" style="width: 7%;"></div>
+                
+                <div class="w-full flex items-center justify-between text-xs sm:text-sm font-black z-10 text-slate-300">
+                    <span id="stageNode1" class="scale-125 drop-shadow" title="Area 1: Hutan Ceria (Ular)">🌲</span>
+                    <span class="text-slate-600 hidden sm:inline">━━━</span>
+                    <span id="stageNode2" class="opacity-60" title="Area 2: Sungai Liar (Buaya)">🌊</span>
+                    <span class="text-slate-600 hidden sm:inline">━━━</span>
+                    <span id="stageNode3" class="opacity-60" title="Area 3: Hutan Harimau (Harimau)">🌴</span>
+                    <span class="text-slate-600 hidden sm:inline">━━━</span>
+                    <span id="stageNode4" class="opacity-60" title="Area 4: Gunung Misterius (Serigala)">🏔️</span>
+                    <span class="text-slate-600 hidden sm:inline">━━━</span>
+                    <span id="stageNode5" class="opacity-60" title="Area 5: Sarang Hewan (Singa)">🏰</span>
+                    <span class="text-slate-600 hidden sm:inline">━━━</span>
+                    <span id="stageNode6" class="opacity-60" title="Final: Harta Karun">💎</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔴 KELOMPOK B HUD -->
+        <div class="team-b-panel px-3 py-1.5 flex items-center gap-3 min-w-[250px] sm:min-w-[300px] justify-between relative">
+            <!-- Item & Score Kelompok B -->
+            <div class="flex items-center gap-2 bg-red-950/10 px-2.5 py-1 rounded-xl border border-red-900/20">
+                <div class="text-left">
+                    <div class="text-[10px] font-bold text-red-900 uppercase leading-none">SKOR</div>
+                    <div id="scoreB" class="text-lg sm:text-xl font-black text-red-700 leading-tight">0</div>
+                </div>
+                <div id="shieldIconB" class="hidden text-base" title="Shield Aktif (Pelindung 1 Kesalahan)">🛡️</div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <div class="text-right">
+                    <div class="flex items-center justify-end gap-1.5">
+                        <span id="badgeB" class="hidden px-2 py-0.5 text-[11px] font-extrabold rounded-full bg-amber-400 text-amber-950 border border-amber-700 animate-bounce">
+                            ⚡ BOOST!
+                        </span>
+                        <span class="font-black text-red-950 text-sm sm:text-base tracking-wide">KELOMPOK B</span>
+                    </div>
+                    <div id="heartsB" class="text-lg sm:text-xl tracking-widest leading-none mt-0.5" title="Nyawa Kelompok B">
+                        ❤️❤️❤️
+                    </div>
+                </div>
+                <div class="w-10 h-10 rounded-xl bg-red-600 border-2 border-red-900 flex items-center justify-center text-xl shadow-inner font-extrabold text-white">
+                    🔴
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         2. BAGIAN TENGAH (AREA PETUALANGAN UTAMA - MURNI VISUAL TANPA TERTUTUP UI)
+         ========================================================================= -->
+    <main id="adventureViewport" class="relative flex-1 w-full overflow-hidden bg-sky-300">
+        <!-- Main 60FPS Endless Adventure Runner Canvas -->
+        <canvas id="gameCanvas" class="block w-full h-full"></canvas>
+    </main>
+
+    <!-- =========================================================================
+         3. BAGIAN BAWAH (AREA SOAL & PANEL TOMBOL KEDUA KELOMPOK)
+         ========================================================================= -->
+    <footer id="bottomDeck" class="h-[27vh] min-h-[168px] max-h-[230px] w-full bg-gradient-to-t from-slate-950 via-slate-900 to-slate-800 border-t-4 border-slate-950 px-3 py-2 flex items-stretch justify-between gap-3 z-20 shrink-0">
+        
+        <!-- 🔵 PANEL TOMBOL KELOMPOK A -->
+        <div class="team-a-panel flex-1 flex flex-col justify-between p-2.5 sm:p-3 relative">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                    <span class="text-base sm:text-lg">🔵</span>
+                    <span class="font-black text-blue-950 text-xs sm:text-sm uppercase tracking-wider">KELOMPOK A</span>
+                </div>
+                <span id="statusTextA" class="text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-blue-200 text-blue-900 border border-blue-400">
+                    SIAP JAWAB!
+                </span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 my-auto py-1">
+                <button id="btnA_lt" onclick="game.submitAnswer('A', '<')" class="btn-3d-blue rounded-2xl py-2 sm:py-3.5 text-2xl sm:text-4xl font-black flex flex-col items-center justify-center leading-none">
+                    <span>&lt;</span>
+                    <span class="text-[10px] font-bold opacity-80 mt-1">Lebih Kecil (A)</span>
+                </button>
+                <button id="btnA_eq" onclick="game.submitAnswer('A', '=')" class="btn-3d-blue rounded-2xl py-2 sm:py-3.5 text-2xl sm:text-4xl font-black flex flex-col items-center justify-center leading-none">
+                    <span>=</span>
+                    <span class="text-[10px] font-bold opacity-80 mt-1">Sama Dengan (S)</span>
+                </button>
+                <button id="btnA_gt" onclick="game.submitAnswer('A', '>')" class="btn-3d-blue rounded-2xl py-2 sm:py-3.5 text-2xl sm:text-4xl font-black flex flex-col items-center justify-center leading-none">
+                    <span>&gt;</span>
+                    <span class="text-[10px] font-bold opacity-80 mt-1">Lebih Besar (D)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ⚔️ KARTU SOAL TANTANGAN DESIMAL (TENGAH BAWAH) -->
+        <div id="questionCard" class="cartoon-panel w-[36%] max-w-[460px] flex flex-col items-center justify-between p-2.5 sm:p-3.5 bg-gradient-to-b from-amber-50 to-orange-100 border-amber-900 relative">
+            <div class="w-full flex items-center justify-between px-2">
+                <span id="challengeHeader" class="text-xs sm:text-sm font-black text-amber-900 uppercase tracking-wider flex items-center gap-1">
+                    ⚔️ TANTANGAN DESIMAL
+                </span>
+                <span id="speedBonusHint" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500 text-white shadow">
+                    ⚡ 1-3d: SUPER FAST!
+                </span>
+            </div>
+
+            <!-- Nomor Soal & Perbandingan Bilangan Desimal -->
+            <div class="my-auto flex items-center justify-center gap-2 sm:gap-4 w-full py-1">
+                <div id="numLeft" class="bg-white border-4 border-slate-800 rounded-2xl px-3 sm:px-5 py-1.5 sm:py-2 text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 shadow-inner min-w-[90px] sm:min-w-[125px] text-center">
+                    0,5
+                </div>
+                <div id="compareSlot" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-300 border-4 border-amber-800 flex items-center justify-center text-2xl sm:text-3xl font-black text-amber-950 shadow-inner">
+                    ?
+                </div>
+                <div id="numRight" class="bg-white border-4 border-slate-800 rounded-2xl px-3 sm:px-5 py-1.5 sm:py-2 text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 shadow-inner min-w-[90px] sm:min-w-[125px] text-center">
+                    0,8
+                </div>
+            </div>
+
+            <div id="roundSubtext" class="text-[11px] sm:text-xs font-extrabold text-slate-700 text-center">
+                Bandingkan kedua bilangan desimal dengan memilih <b>&lt;</b>, <b>=</b>, atau <b>&gt;</b>!
+            </div>
+        </div>
+
+        <!-- 🔴 PANEL TOMBOL KELOMPOK B -->
+        <div class="team-b-panel flex-1 flex flex-col justify-between p-2.5 sm:p-3 relative">
+            <div class="flex items-center justify-between">
+                <span id="statusTextB" class="text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-red-200 text-red-900 border border-red-400">
+                    SIAP JAWAB!
+                </span>
+                <div class="flex items-center gap-1.5">
+                    <span class="font-black text-red-950 text-xs sm:text-sm uppercase tracking-wider">KELOMPOK B</span>
+                    <span class="text-base sm:text-lg">🔴</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 my-auto py-1">
+                <button id="btnB_lt" onclick="game.submitAnswer('B', '<')" class="btn-3d-red rounded-2xl py-2 sm:py-3.5 text-2xl sm:text-4xl font-black flex flex-col items-center justify-center leading-none">
+                    <span>&lt;</span>
+                    <span class="text-[10px] font-bold opacity-80 mt-1">Lebih Kecil (J)</span>
+                </button>
+                <button id="btnB_eq" onclick="game.submitAnswer('B', '=')" class="btn-3d-red rounded-2xl py-2 sm:py-3.5 text-2xl sm:text-4xl font-black flex flex-col items-center justify-center leading-none">
+                    <span>=</span>
+                    <span class="text-[10px] font-bold opacity-80 mt-1">Sama Dengan (K)</span>
+                </button>
+                <button id="btnB_gt" onclick="game.submitAnswer('B', '>')" class="btn-3d-red rounded-2xl py-2 sm:py-3.5 text-2xl sm:text-4xl font-black flex flex-col items-center justify-center leading-none">
+                    <span>&gt;</span>
+                    <span class="text-[10px] font-bold opacity-80 mt-1">Lebih Besar (L)</span>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         4. START SCREEN MODAL (DENGAN PREVIEW KARAKTER BERLARI DI HUTAN)
+         ========================================================================= -->
+    <div id="startScreenModal" class="fixed inset-0 z-50 flex flex-col items-center justify-between p-4 sm:p-6 bg-slate-950/40 backdrop-blur-[2px]">
+        <!-- Top Banner -->
+        <div class="cartoon-panel px-6 sm:px-10 py-4 bg-gradient-to-b from-amber-300 via-amber-400 to-orange-400 border-amber-950 text-center max-w-2xl w-full mt-2 float-anim">
+            <div class="inline-block bg-amber-950 text-amber-300 text-xs sm:text-sm font-black px-3 py-0.5 rounded-full mb-1 tracking-widest uppercase">
+                GAME EDUKASI MATEMATIKA KELAS V SD
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white text-stroke-dark tracking-tight">
+                🏃 ADVENTURE DECIMAL RUN
+            </h1>
+            <p class="text-amber-950 font-black text-sm sm:text-lg tracking-widest mt-1">
+                LARI • JAWAB • BERTAHAN
+            </p>
+        </div>
+
+        <!-- Middle Transparent Window so students see the 2 characters running into the forest! -->
+        <div class="pointer-events-none flex-1 flex items-end justify-center pb-2">
+            <div class="bg-slate-900/80 text-white px-4 py-1.5 rounded-full border-2 border-slate-600 text-xs sm:text-sm font-bold shadow-lg">
+                🌲 Kedua petualang cilik sedang berlari memasuki Hutan Desimal! 🏃‍♂️💨 🏃‍♀️💨
+            </div>
+        </div>
+
+        <!-- Bottom Team Preview & Start Button -->
+        <div class="cartoon-panel p-4 sm:p-5 max-w-3xl w-full bg-white/95 flex flex-col items-center gap-4 mb-2">
+            <div class="grid grid-cols-2 gap-4 w-full">
+                <!-- Kelompok A Preview Card -->
+                <div class="team-a-panel p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-600 border-2 border-blue-950 flex items-center justify-center text-2xl shadow">
+                            👦🏻
+                        </div>
+                        <div>
+                            <div class="font-black text-blue-950 text-sm sm:text-lg">🔵 Kelompok A</div>
+                            <div class="text-xs font-bold text-blue-800">Petualang Putra</div>
+                        </div>
+                    </div>
+                    <div class="text-lg sm:text-2xl">❤️❤️❤️</div>
+                </div>
+
+                <!-- Kelompok B Preview Card -->
+                <div class="team-b-panel p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-12 h-12 rounded-2xl bg-red-600 border-2 border-red-950 flex items-center justify-center text-2xl shadow">
+                            👧🏻
+                        </div>
+                        <div>
+                            <div class="font-black text-red-950 text-sm sm:text-lg">🔴 Kelompok B</div>
+                            <div class="text-xs font-bold text-red-800">Petualang Putri</div>
+                        </div>
+                    </div>
+                    <div class="text-lg sm:text-2xl">❤️❤️❤️</div>
+                </div>
+            </div>
+
+            <button onclick="game.startAdventure()" class="btn-3d-gold w-full py-3.5 sm:py-4 rounded-2xl text-xl sm:text-3xl font-black tracking-wide uppercase cursor-pointer">
+                🚀 MULAI PETUALANGAN
+            </button>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         5. HASIL AKHIR / FINISH MODAL (SETELAH SOAL 15 ATAU NYAWA HABIS)
+         ========================================================================= -->
+    <div id="resultModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/65 backdrop-blur-sm">
+        <div class="cartoon-panel max-w-2xl w-full p-6 sm:p-8 bg-gradient-to-b from-amber-50 to-white text-center flex flex-col items-center gap-5 border-amber-950">
+            <div class="inline-block bg-amber-400 border-2 border-amber-900 text-amber-950 font-black px-4 py-1 rounded-full text-sm uppercase tracking-wider">
+                🏁 FINISH • HARTA KARUN TERBUKA 💎💎💎
+            </div>
+
+            <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+                🏆 PETUALANGAN SELESAI!
+            </h2>
+
+            <!-- Winner Banner -->
+            <div id="winnerBanner" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 border-4 border-amber-800 shadow-md">
+                <div class="text-xs sm:text-sm font-black text-amber-900 uppercase tracking-widest">🏆 PEMENANG</div>
+                <div id="winnerTitle" class="text-2xl sm:text-4xl font-black text-amber-950 mt-1">KELOMPOK A!</div>
+            </div>
+
+            <!-- Score Comparison Cards -->
+            <div class="grid grid-cols-2 gap-4 w-full">
+                <!-- Result A -->
+                <div class="team-a-panel p-4 flex flex-col items-center gap-1.5">
+                    <div class="text-lg sm:text-xl font-black text-blue-950">🔵 KELOMPOK A</div>
+                    <div class="text-2xl sm:text-3xl font-black text-blue-700 my-1">
+                        ⭐ Skor: <span id="finalScoreA">10</span>
+                    </div>
+                    <div class="text-sm sm:text-base font-extrabold text-blue-900">
+                        <span id="finalHeartsIconsA">❤️❤️</span> Sisa nyawa: <span id="finalLivesA">2</span>
+                    </div>
+                </div>
+
+                <!-- Result B -->
+                <div class="team-b-panel p-4 flex flex-col items-center gap-1.5">
+                    <div class="text-lg sm:text-xl font-black text-red-950">🔴 KELOMPOK B</div>
+                    <div class="text-2xl sm:text-3xl font-black text-red-700 my-1">
+                        ⭐ Skor: <span id="finalScoreB">8</span>
+                    </div>
+                    <div class="text-sm sm:text-base font-extrabold text-red-900">
+                        <span id="finalHeartsIconsB">❤️</span> Sisa nyawa: <span id="finalLivesB">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="game.restartAdventure()" class="btn-3d-gold w-full py-3.5 rounded-2xl text-xl sm:text-2xl font-black uppercase tracking-wide cursor-pointer">
+                🔄 MAINKAN LAGI
+            </button>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         6. ENGINE GAME, AUDIO SYNTHESIZER, DAN ANIMASI KARAKTER 3D KARTUN
+         ========================================================================= -->
+    <script>
+        /**
+         * 15 SOAL RESMI MEMBANDINGKAN BILANGAN DESIMAL KELAS V SD
+         */
+        const QUESTIONS_DATA = [
+            // AREA 1 — HUTAN CERIA (Ular 🐍)
+            { id: 1, left: "0,5", right: "0,8", answer: "<", area: 1 },
+            { id: 2, left: "0,9", right: "0,4", answer: ">", area: 1 },
+            { id: 3, left: "0,7", right: "0,7", answer: "=", area: 1 },
+            // AREA 2 — SUNGAI LIAR (Buaya 🐊)
+            { id: 4, left: "1,3", right: "1,8", answer: "<", area: 2 },
+            { id: 5, left: "2,6", right: "2,1", answer: ">", area: 2 },
+            { id: 6, left: "1,5", right: "1,5", answer: "=", area: 2 },
+            // AREA 3 — HUTAN HARIMAU (Harimau 🐯)
+            { id: 7, left: "0,3", right: "0,6", answer: "<", area: 3 },
+            { id: 8, left: "2,8", right: "2,4", answer: ">", area: 3 },
+            { id: 9, left: "3,2", right: "3,2", answer: "=", area: 3 },
+            // AREA 4 — GUNUNG MISTERIUS (Serigala 🐺)
+            { id: 10, left: "1,7", right: "1,9", answer: "<", area: 4 },
+            { id: 11, left: "4,6", right: "4,2", answer: ">", area: 4 },
+            { id: 12, left: "2,3", right: "2,7", answer: "<", area: 4 },
+            // AREA 5 — SARANG HEWAN / BENTENG TERAKHIR (Singa 🦁)
+            { id: 13, left: "3,5", right: "3,5", answer: "=", area: 5 },
+            { id: 14, left: "4,8", right: "4,3", answer: ">", area: 5 },
+            { id: 15, left: "5,2", right: "5,9", answer: "<", area: 5, isBoss: true }
+        ];
+
+        const BIOMES = {
+            1: {
+                name: "🌲 AREA 1 — HUTAN CERIA",
+                beastName: "Ular Hutan",
+                beastEmoji: "🐍",
+                beastType: "snake",
+                skyTop: "#38bdf8",
+                skyBottom: "#bae6fd",
+                mountainColor: "#64748b",
+                treeColor1: "#15803d",
+                treeColor2: "#16a34a",
+                groundGrass: "#22c55e",
+                trackTop: "#d97706",
+                trackBottom: "#b45309"
+            },
+            2: {
+                name: "🌊 AREA 2 — SUNGAI LIAR",
+                beastName: "Buaya Muara",
+                beastEmoji: "🐊",
+                beastType: "croc",
+                skyTop: "#0284c7",
+                skyBottom: "#7dd3fc",
+                mountainColor: "#475569",
+                treeColor1: "#0f766e",
+                treeColor2: "#0d9488",
+                groundGrass: "#10b981",
+                trackTop: "#ca8a04",
+                trackBottom: "#a16207",
+                hasRiver: true
+            },
+            3: {
+                name: "🌴 AREA 3 — HUTAN HARIMAU",
+                beastName: "Harimau Sumatera",
+                beastEmoji: "🐯",
+                beastType: "tiger",
+                skyTop: "#f59e0b",
+                skyBottom: "#fde68a",
+                mountainColor: "#78350f",
+                treeColor1: "#14532d",
+                treeColor2: "#15803d",
+                groundGrass: "#65a30d",
+                trackTop: "#b45309",
+                trackBottom: "#92400e"
+            },
+            4: {
+                name: "🏔️ AREA 4 — GUNUNG MISTERIUS",
+                beastName: "Serigala Gunung",
+                beastEmoji: "🐺",
+                beastType: "wolf",
+                skyTop: "#4f46e5",
+                skyBottom: "#c7d2fe",
+                mountainColor: "#334155",
+                treeColor1: "#1e3a8a",
+                treeColor2: "#1d4ed8",
+                groundGrass: "#475569",
+                trackTop: "#64748b",
+                trackBottom: "#475569",
+                hasFog: true
+            },
+            5: {
+                name: "🏰 AREA 5 — SARANG HEWAN",
+                beastName: "Raja Singa",
+                beastEmoji: "🦁",
+                beastType: "lion",
+                skyTop: "#991b1b",
+                skyBottom: "#fca5a5",
+                mountainColor: "#450a0a",
+                treeColor1: "#7f1d1d",
+                treeColor2: "#991b1b",
+                groundGrass: "#b45309",
+                trackTop: "#78350f",
+                trackBottom: "#451a03"
+            },
+            6: {
+                name: "💎 FINAL AREA — HARTA KARUN",
+                beastName: "Raja Singa",
+                beastEmoji: "🦁",
+                beastType: "lion",
+                skyTop: "#0ea5e9",
+                skyBottom: "#fef08a",
+                mountainColor: "#0369a1",
+                treeColor1: "#15803d",
+                treeColor2: "#22c55e",
+                groundGrass: "#4ade80",
+                trackTop: "#f59e0b",
+                trackBottom: "#d97706"
+            }
+        };
+
+        /**
+         * WEB AUDIO SYNTHESIZER (TANPA FILE EKSTERNAL, 100% BEKERJA DI BROWSER)
+         */
+        class SoundSystem {
+            constructor() {
+                this.ctx = null;
+                this.enabled = true;
+                this.bgmTimer = null;
+                this.bgmStep = 0;
+                this.mode = 'cheerful'; // 'cheerful' | 'tense' | 'boss'
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioCtx();
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+
+            playTone(freq, type = 'sine', duration = 0.15, vol = 0.12, slideTo = null) {
+                if (!this.enabled || !this.ctx) return;
+                try {
+                    const now = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, now);
+                    if (slideTo) {
+                        osc.frequency.exponentialRampToValueAtTime(slideTo, now + duration);
+                    }
+                    gain.gain.setValueAtTime(vol, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + duration);
+                } catch (e) {}
+            }
+
+            startBGM() {
+                this.init();
+                this.stopBGM();
+                const cheerfulNotes = [261.6, 329.6, 392.0, 523.3, 392.0, 329.6, 293.7, 349.2];
+                const tenseNotes = [146.8, 155.6, 146.8, 130.8, 146.8, 164.8, 155.6, 130.8];
+                this.bgmTimer = setInterval(() => {
+                    if (!this.enabled || !this.ctx) return;
+                    const notes = this.mode === 'cheerful' ? cheerfulNotes : tenseNotes;
+                    const f = notes[this.bgmStep % notes.length];
+                    this.playTone(f, this.mode === 'cheerful' ? 'triangle' : 'sawtooth', 0.14, 0.04);
+                    this.bgmStep++;
+                }, 220);
+            }
+
+            stopBGM() {
+                if (this.bgmTimer) {
+                    clearInterval(this.bgmTimer);
+                    this.bgmTimer = null;
+                }
+            }
+
+            playClick() {
+                this.init();
+                this.playTone(600, 'sine', 0.08, 0.12, 850);
+            }
+
+            playBoost() {
+                this.init();
+                this.playTone(440, 'triangle', 0.12, 0.15, 880);
+                setTimeout(() => this.playTone(660, 'triangle', 0.2, 0.15, 1320), 90);
+            }
+
+            playTick(urgent = false) {
+                this.init();
+                if (urgent) {
+                    this.playTone(880, 'square', 0.12, 0.14, 440);
+                } else {
+                    this.playTone(520, 'sine', 0.06, 0.06);
+                }
+            }
+
+            playBeastRoar() {
+                this.init();
+                this.playTone(180, 'sawtooth', 0.45, 0.22, 65);
+                setTimeout(() => this.playTone(140, 'sawtooth', 0.4, 0.2, 55), 140);
+            }
+
+            playChomp() {
+                this.init();
+                this.playTone(300, 'sawtooth', 0.15, 0.28, 60);
+                setTimeout(() => this.playTone(160, 'square', 0.25, 0.28, 45), 100);
+            }
+
+            playScreamTolong(isBoy = true) {
+                this.init();
+                if (!this.enabled) return;
+
+                // 1. Efek Suara Teriak Panik Sintetis (Selalu berbunyi di semua perangkat)
+                const baseFreq = isBoy ? 620 : 780;
+                this.playTone(baseFreq, 'sawtooth', 0.22, 0.2, baseFreq * 1.45);
+                setTimeout(() => {
+                    this.playTone(baseFreq * 1.35, 'triangle', 0.35, 0.22, baseFreq * 0.75);
+                }, 180);
+
+                // 2. Suara Vokal Anak Berteriak "TOLONG!" (Web Speech API Bahasa Indonesia)
+                try {
+                    if ('speechSynthesis' in window) {
+                        window.speechSynthesis.cancel();
+                        const utter = new SpeechSynthesisUtterance("Tolong! Aaa tolong!");
+                        utter.lang = 'id-ID';
+                        utter.pitch = isBoy ? 1.55 : 1.9;
+                        utter.rate = 1.35;
+                        utter.volume = 1.0;
+                        window.speechSynthesis.speak(utter);
+                    }
+                } catch (e) {}
+            }
+
+            playRespawn() {
+                this.init();
+                this.playTone(523.25, 'sine', 0.12, 0.14, 783.99);
+                setTimeout(() => this.playTone(783.99, 'sine', 0.18, 0.14, 1046.5), 100);
+            }
+
+            playVictory() {
+                this.init();
+                const melody = [523.25, 659.25, 783.99, 1046.5];
+                melody.forEach((n, idx) => {
+                    setTimeout(() => this.playTone(n, 'triangle', 0.25, 0.18), idx * 140);
+                });
+            }
+        }
+
+        /**
+         * SISTEM UTAMA GAME ADVENTURE DECIMAL RUN
+         */
+        class AdventureDecimalGame {
+            constructor() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.sound = new SoundSystem();
+
+                this.state = 'START'; // START | QUESTION | RESOLVING | FINISH
+                this.questionIndex = 0;
+                this.currentBiomeId = 1;
+                this.timeLeft = 10;
+                this.timerInterval = null;
+                this.questionStartTime = 0;
+
+                // World & Parallax Scrolling
+                this.worldDistance = 0;
+                this.baseRunSpeed = 5.8;
+                this.currentWorldSpeed = 5.8;
+                this.darknessOverlay = 0; // 0 = Ceria, 0.55 = Menegangkan
+                this.cameraShake = 0;
+
+                // Scenery Elements
+                this.mountains = [];
+                this.trees = [];
+                this.bushes = [];
+                this.clouds = [];
+                this.birds = [];
+                this.butterflies = [];
+                this.dustParticles = [];
+                this.leafParticles = [];
+                this.eatExplosions = [];
+                this.confetti = [];
+                this.trackItems = [];
+                this.finishLineX = null;
+                this.treasureOpen = false;
+
+                // Boss Guardian on Q15
+                this.bossLion = { active: false, phase: 0 };
+
+                // Data Kedua Kelompok (KARAKTER SELALU BERLARI!)
+                this.teams = {
+                    A: this.createTeamState('A', '#2563eb', '#60a5fa'),
+                    B: this.createTeamState('B', '#dc2626', '#f87171')
+                };
+
+                this.initScenery();
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                this.setupKeyboardShortcuts();
+
+                this.lastFrameTime = performance.now();
+                requestAnimationFrame((t) => this.gameLoop(t));
+            }
+
+            createTeamState(id, primaryColor, lightColor) {
+                return {
+                    id,
+                    primaryColor,
+                    lightColor,
+                    hearts: 3,
+                    score: 0,
+                    shield: false,
+                    alive: true,
+                    selectedAnswer: null,
+                    answerTimeSec: null,
+                    // Posisi & Animasi Lari Karakter
+                    progressRatio: 0.22, // Posisi relatif pada lintasan (0.15 s/d 0.78)
+                    targetRatio: 0.22,
+                    runCycle: id === 'A' ? 0 : Math.PI, // Fase ayunan kaki & tangan
+                    runSpeedMultiplier: 1.0,
+                    mood: 'happy', // 'happy' | 'boost' | 'panic' | 'eaten' | 'respawn'
+                    invincibleTimer: 0,
+                    boostTimer: 0,
+                    // Status Hewan Pemangsa yang Mengejar Jalur Ini
+                    beast: {
+                        active: false,
+                        type: 'snake',
+                        xRatio: -0.15,
+                        jawOpen: 0,
+                        phase: 'none', // 'chasing' | 'biting' | 'retreating'
+                        timer: 0
+                    }
+                };
+            }
+
+            resizeCanvas() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+
+            initScenery() {
+                this.mountains = [];
+                for (let i = 0; i < 7; i++) {
+                    this.mountains.push({
+                        x: i * 320,
+                        w: 280 + Math.random() * 140,
+                        h: 90 + Math.random() * 70
+                    });
+                }
+
+                this.trees = [];
+                for (let i = 0; i < 14; i++) {
+                    this.trees.push({
+                        x: i * 160 + Math.random() * 50,
+                        scale: 0.75 + Math.random() * 0.45,
+                        variant: i % 2
+                    });
+                }
+
+                this.bushes = [];
+                for (let i = 0; i < 16; i++) {
+                    this.bushes.push({
+                        x: i * 140,
+                        w: 55 + Math.random() * 35
+                    });
+                }
+
+                this.clouds = [];
+                for (let i = 0; i < 6; i++) {
+                    this.clouds.push({
+                        x: i * 280 + Math.random() * 100,
+                        y: 20 + Math.random() * 45,
+                        scale: 0.7 + Math.random() * 0.5
+                    });
+                }
+
+                this.birds = [];
+                for (let i = 0; i < 4; i++) {
+                    this.birds.push({
+                        x: Math.random() * 1200,
+                        y: 30 + Math.random() * 60,
+                        wingPhase: Math.random() * Math.PI * 2
+                    });
+                }
+
+                this.butterflies = [];
+                for (let i = 0; i < 5; i++) {
+                    this.butterflies.push({
+                        x: Math.random() * 1200,
+                        y: 120 + Math.random() * 120,
+                        phase: Math.random() * Math.PI * 2,
+                        color: i % 2 === 0 ? '#facc15' : '#f472b6'
+                    });
+                }
+            }
+
+            setupKeyboardShortcuts() {
+                window.addEventListener('keydown', (e) => {
+                    if (this.state !== 'QUESTION') return;
+                    const key = e.key.toLowerCase();
+                    // Shortcut Kelompok A: A (<), S (=), D (>)
+                    if (key === 'a') this.submitAnswer('A', '<');
+                    if (key === 's') this.submitAnswer('A', '=');
+                    if (key === 'd') this.submitAnswer('A', '>');
+                    // Shortcut Kelompok B: J (<), K (=), L (>) atau Arrow Keys
+                    if (key === 'j' || e.key === 'ArrowLeft') this.submitAnswer('B', '<');
+                    if (key === 'k' || e.key === 'ArrowDown') this.submitAnswer('B', '=');
+                    if (key === 'l' || e.key === 'ArrowRight') this.submitAnswer('B', '>');
+                });
+            }
+
+            toggleSound() {
+                this.sound.enabled = !this.sound.enabled;
+                document.getElementById('btnToggleSound').textContent = this.sound.enabled ? '🔊' : '🔇';
+            }
+
+            toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                } else {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+
+            /**
+             * MULAI PETUALANGAN DARI START SCREEN
+             */
+            startAdventure() {
+                this.sound.init();
+                this.sound.playClick();
+                this.sound.mode = 'cheerful';
+                this.sound.startBGM();
+
+                document.getElementById('startScreenModal').classList.add('hidden');
+                document.getElementById('resultModal').classList.add('hidden');
+
+                this.questionIndex = 0;
+                this.finishLineX = null;
+                this.treasureOpen = false;
+                this.confetti = [];
+                this.teams.A = this.createTeamState('A', '#2563eb', '#60a5fa');
+                this.teams.B = this.createTeamState('B', '#dc2626', '#f87171');
+
+                this.updateTopHUD();
+                this.loadQuestion(0);
+            }
+
+            restartAdventure() {
+                this.startAdventure();
+            }
+
+            /**
+             * MEMUAT SOAL KE-i (KARAKTER TETAP BERLARI, LATAR SEDIKIT DIPERLAMBAT AGAR FOKUS)
+             */
+            loadQuestion(idx) {
+                if (idx >= QUESTIONS_DATA.length) {
+                    this.triggerFinishSequence();
+                    return;
+                }
+
+                // Cek apakah kedua kelompok sudah kehabisan seluruh nyawa
+                if (!this.teams.A.alive && !this.teams.B.alive) {
+                    this.triggerFinishSequence();
+                    return;
+                }
+
+                this.state = 'QUESTION';
+                this.questionIndex = idx;
+                const q = QUESTIONS_DATA[idx];
+                this.currentBiomeId = q.area;
+                this.sound.mode = q.isBoss ? 'tense' : 'cheerful';
+                this.darknessOverlay = q.isBoss ? 0.25 : 0;
+
+                // Kecepatan lari sedikit diperlambat saat soal tampil agar siswa fokus
+                this.currentWorldSpeed = this.baseRunSpeed * 0.78;
+
+                // Reset pilihan jawaban kedua kelompok
+                ['A', 'B'].forEach(tKey => {
+                    const t = this.teams[tKey];
+                    t.selectedAnswer = null;
+                    t.answerTimeSec = null;
+                    if (t.alive) {
+                        t.mood = 'happy';
+                        t.runSpeedMultiplier = 1.0;
+                    }
+                    this.setButtonsState(tKey, !t.alive, null);
+                    const statusEl = document.getElementById(`statusText${tKey}`);
+                    if (!t.alive) {
+                        statusEl.textContent = "💀 NYAWA HABIS";
+                        statusEl.className = "text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-slate-700 text-white";
+                    } else {
+                        statusEl.textContent = "PILIH < , = , >";
+                        statusEl.className = tKey === 'A'
+                            ? "text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-blue-200 text-blue-900 border border-blue-400"
+                            : "text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-red-200 text-red-900 border border-red-400";
+                    }
+                });
+
+                // Spawn item bonus di lintasan
+                this.spawnTrackItems();
+
+                // Aktifkan Singa Boss di Soal 15
+                this.bossLion.active = !!q.isBoss;
+
+                // Update UI Soal di Bagian Bawah
+                document.getElementById('numLeft').textContent = q.left;
+                document.getElementById('numRight').textContent = q.right;
+                document.getElementById('compareSlot').textContent = "?";
+                document.getElementById('compareSlot').className = "w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-300 border-4 border-amber-800 flex items-center justify-center text-2xl sm:text-3xl font-black text-amber-950 shadow-inner";
+
+                const headerEl = document.getElementById('challengeHeader');
+                if (q.isBoss) {
+                    headerEl.innerHTML = "🦁 FINAL CHALLENGE (SOAL 15)";
+                    headerEl.className = "text-xs sm:text-sm font-black text-red-700 uppercase tracking-wider flex items-center gap-1 animate-pulse";
+                    document.getElementById('roundSubtext').innerHTML = "⚠️ <b>RAJA SINGA</b> menjaga peti harta karun! Jawab dengan cepat dan tepat!";
+                } else {
+                    headerEl.innerHTML = "⚔️ TANTANGAN DESIMAL";
+                    headerEl.className = "text-xs sm:text-sm font-black text-amber-900 uppercase tracking-wider flex items-center gap-1";
+                    document.getElementById('roundSubtext').innerHTML = "Bandingkan kedua bilangan desimal dengan memilih <b>&lt;</b>, <b>=</b>, atau <b>&gt;</b>!";
+                }
+
+                this.updateTopHUD();
+                this.startQuestionTimer();
+            }
+
+            spawnTrackItems() {
+                this.trackItems = [];
+                const types = ['🪙', '⚡', '🛡️', '❤️'];
+                const pick = types[this.questionIndex % types.length];
+                ['A', 'B'].forEach(tKey => {
+                    if (!this.teams[tKey].alive) return;
+                    this.trackItems.push({
+                        team: tKey,
+                        xRatio: 0.62,
+                        icon: pick,
+                        collected: false
+                    });
+                });
+            }
+
+            startQuestionTimer() {
+                if (this.timerInterval) clearInterval(this.timerInterval);
+                this.timeLeft = 10;
+                this.questionStartTime = performance.now();
+                this.renderTimerUI();
+
+                this.timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    this.renderTimerUI();
+
+                    if (this.timeLeft <= 3 && this.timeLeft > 0) {
+                        this.sound.playTick(true);
+                    } else if (this.timeLeft > 3) {
+                        this.sound.playTick(false);
+                    }
+
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timerInterval);
+                        this.resolveRound();
+                    }
+                }, 1000);
+            }
+
+            renderTimerUI() {
+                const timerBox = document.getElementById('timerBox');
+                const timerValue = document.getElementById('timerValue');
+                const viewport = document.getElementById('adventureViewport');
+                const bonusHint = document.getElementById('speedBonusHint');
+
+                timerValue.textContent = Math.max(0, this.timeLeft);
+
+                const elapsed = 10 - this.timeLeft;
+                if (elapsed <= 3) {
+                    bonusHint.textContent = "⚡ SUPER FAST! (Boost Besar)";
+                    bonusHint.className = "text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500 text-white shadow";
+                } else if (elapsed <= 7) {
+                    bonusHint.textContent = "🔥 GOOD! (Boost Normal)";
+                    bonusHint.className = "text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-amber-500 text-white shadow";
+                } else {
+                    bonusHint.textContent = "⏳ LAST SECOND! (Cepat Jawab!)";
+                    bonusHint.className = "text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-red-600 text-white shadow animate-pulse";
+                }
+
+                if (this.timeLeft <= 3 && this.state === 'QUESTION') {
+                    timerBox.classList.add('timer-urgent');
+                    viewport.classList.add('shake-light');
+                    this.darknessOverlay = Math.max(this.darknessOverlay, 0.22);
+                } else {
+                    timerBox.classList.remove('timer-urgent');
+                    viewport.classList.remove('shake-light');
+                }
+            }
+
+            setButtonsState(teamKey, disabled, selectedSymbol) {
+                const map = { '<': 'lt', '=': 'eq', '>': 'gt' };
+                ['<', '=', '>'].forEach(sym => {
+                    const btn = document.getElementById(`btn${teamKey}_${map[sym]}`);
+                    if (!btn) return;
+                    btn.disabled = disabled;
+                    if (selectedSymbol === sym) {
+                        btn.classList.add('btn-selected-ring', 'selected');
+                    } else {
+                        btn.classList.remove('btn-selected-ring', 'selected');
+                    }
+                    btn.style.opacity = disabled && selectedSymbol !== sym ? '0.55' : '1';
+                });
+            }
+
+            /**
+             * KETIKA KELOMPOK MENEKAN TOMBOL < , = , ATAU >
+             */
+            submitAnswer(teamKey, symbol) {
+                if (this.state !== 'QUESTION') return;
+                const team = this.teams[teamKey];
+                if (!team.alive || team.selectedAnswer !== null) return;
+
+                this.sound.playClick();
+                team.selectedAnswer = symbol;
+                team.answerTimeSec = (performance.now() - this.questionStartTime) / 1000;
+
+                this.setButtonsState(teamKey, true, symbol);
+                const statusEl = document.getElementById(`statusText${teamKey}`);
+                statusEl.textContent = "🔒 TERKUNCI!";
+                statusEl.className = "text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 border border-amber-700";
+
+                // Jika kedua kelompok yang masih hidup sudah menjawab, langsung proses hasilnya!
+                const aDone = !this.teams.A.alive || this.teams.A.selectedAnswer !== null;
+                const bDone = !this.teams.B.alive || this.teams.B.selectedAnswer !== null;
+                if (aDone && bDone) {
+                    if (this.timerInterval) clearInterval(this.timerInterval);
+                    setTimeout(() => this.resolveRound(), 250);
+                }
+            }
+
+            /**
+             * EVALUASI JAWABAN KEDUA KELOMPOK SECARA BERSAMAAN
+             */
+            resolveRound() {
+                if (this.state !== 'QUESTION') return;
+                this.state = 'RESOLVING';
+
+                document.getElementById('timerBox').classList.remove('timer-urgent');
+                document.getElementById('adventureViewport').classList.remove('shake-light');
+
+                const q = QUESTIONS_DATA[this.questionIndex];
+                const slot = document.getElementById('compareSlot');
+                slot.textContent = q.answer;
+                slot.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500 border-4 border-emerald-900 flex items-center justify-center text-2xl sm:text-3xl font-black text-white shadow-lg scale-110 transition-all";
+
+                let anyWrong = false;
+
+                ['A', 'B'].forEach(tKey => {
+                    const team = this.teams[tKey];
+                    if (!team.alive) return;
+
+                    const isCorrect = team.selectedAnswer === q.answer;
+                    const statusEl = document.getElementById(`statusText${tKey}`);
+                    const badgeEl = document.getElementById(`badge${tKey}`);
+
+                    if (isCorrect) {
+                        // JAWABAN BENAR -> ⚡ BOOST!
+                        const tSec = team.answerTimeSec || 9;
+                        let speedLabel = "⏳ LAST SECOND! +1";
+                        let stepAdvance = 0.032;
+
+                        if (tSec <= 3.2) {
+                            speedLabel = "⚡ SUPER FAST! +1";
+                            stepAdvance = 0.055;
+                            this.applyTrackItemReward(team);
+                        } else if (tSec <= 7.2) {
+                            speedLabel = "🔥 GOOD! +1";
+                            stepAdvance = 0.042;
+                            this.applyTrackItemReward(team);
+                        }
+
+                        team.score += 1;
+                        team.mood = 'boost';
+                        team.boostTimer = 2.4;
+                        team.runSpeedMultiplier = 1.85;
+                        team.targetRatio = Math.min(0.76, team.targetRatio + stepAdvance);
+
+                        statusEl.textContent = `✅ BENAR! (${speedLabel})`;
+                        statusEl.className = "text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500 text-white border border-emerald-800";
+
+                        badgeEl.textContent = speedLabel;
+                        badgeEl.className = "px-2 py-0.5 text-[11px] font-extrabold rounded-full bg-emerald-400 text-emerald-950 border border-emerald-800 animate-bounce";
+                        badgeEl.classList.remove('hidden');
+
+                        this.sound.playBoost();
+                    } else {
+                        // JAWABAN SALAH ATAU WAKTU HABIS -> HEWAN BUAS MUNCUL & MENGEJAR!
+                        anyWrong = true;
+                        this.triggerBeastChase(team);
+
+                        statusEl.textContent = team.selectedAnswer === null ? "⏰ WAKTU HABIS!" : "❌ SALAH! AWAS HEWAN!";
+                        statusEl.className = "text-xs sm:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-red-600 text-white border border-red-900 animate-pulse";
+                    }
+                });
+
+                this.updateTopHUD();
+
+                // Jika ada yang salah, suasana berubah menegangkan & tunggu adegan kejar-dimakan-respawn selesai
+                if (anyWrong) {
+                    this.darknessOverlay = 0.48;
+                    this.sound.mode = 'tense';
+                    this.sound.playBeastRoar();
+                    this.currentWorldSpeed = this.baseRunSpeed * 1.45;
+                    setTimeout(() => this.advanceToNextQuestion(), 3900);
+                } else {
+                    // Keduanya benar -> Lari cepat penuh semangat!
+                    this.currentWorldSpeed = this.baseRunSpeed * 1.75;
+                    setTimeout(() => this.advanceToNextQuestion(), 2200);
+                }
+            }
+
+            applyTrackItemReward(team) {
+                const item = this.trackItems.find(it => it.team === team.id && !it.collected);
+                if (!item) return;
+                item.collected = true;
+                if (item.icon === '🛡️') {
+                    team.shield = true;
+                } else if (item.icon === '❤️' && team.hearts < 3) {
+                    team.hearts = Math.min(3, team.hearts + 1);
+                }
+            }
+
+            /**
+             * ADEGAN HEWAN BUAS MENGEJAR -> MENANGKAP/MEMAKAN SECARA KARTUN -> -1 NYAWA -> RESPAWN & LARI LAGI
+             */
+            triggerBeastChase(team) {
+                const biome = BIOMES[this.currentBiomeId];
+                team.mood = 'panic';
+                team.runSpeedMultiplier = 1.45;
+                team.beast.active = true;
+                team.beast.type = biome.beastType;
+                team.beast.xRatio = -0.12;
+                team.beast.phase = 'chasing';
+                team.beast.jawOpen = 0;
+
+                // Karakter langsung berteriak panik saat dikejar!
+                this.sound.playScreamTolong(team.id === 'A');
+
+                // Buat daun-daun beterbangan dari semak
+                for (let i = 0; i < 14; i++) {
+                    this.leafParticles.push({
+                        x: 40 + Math.random() * 120,
+                        y: this.getLaneY(team.id) - 20 + (Math.random() - 0.5) * 50,
+                        vx: 4 + Math.random() * 6,
+                        vy: -3 + Math.random() * 6,
+                        rot: Math.random() * Math.PI * 2,
+                        life: 1.0
+                    });
+                }
+
+                // Setelah 1.35 detik mengejar, hewan menangkap karakter!
+                setTimeout(() => {
+                    if (team.shield) {
+                        // Shield melindungi dari 1 kesalahan!
+                        team.shield = false;
+                        team.beast.phase = 'retreating';
+                        team.mood = 'happy';
+                        const badgeEl = document.getElementById(`badge${team.id}`);
+                        badgeEl.textContent = "🛡️ SHIELD MELINDUNGI!";
+                        badgeEl.className = "px-2 py-0.5 text-[11px] font-extrabold rounded-full bg-cyan-300 text-cyan-950 border border-cyan-800 animate-bounce";
+                        badgeEl.classList.remove('hidden');
+                        this.sound.playRespawn();
+                        this.updateTopHUD();
+                        return;
+                    }
+
+                    // ADEGAN DIMAKAN (🐯 -> 😱 TERIAK TOLONG -> 💥)
+                    team.beast.phase = 'biting';
+                    team.mood = 'eaten';
+                    this.sound.playChomp();
+                    this.sound.playScreamTolong(team.id === 'A');
+                    this.cameraShake = 18;
+
+                    const viewport = document.getElementById('adventureViewport');
+                    viewport.classList.remove('shake-heavy');
+                    void viewport.offsetWidth;
+                    viewport.classList.add('shake-heavy');
+
+                    // Efek kepulan asap kartun & teriakan "TOLONG!!" saat dimakan (TANPA DARAH / GORE)
+                    const charX = this.canvas.width * team.progressRatio;
+                    const charY = this.getLaneY(team.id) - 25;
+                    this.spawnCartoonEatCloud(charX, charY, biome.beastEmoji);
+
+                    // Kurangi 1 nyawa
+                    team.hearts = Math.max(0, team.hearts - 1);
+                    const badgeEl = document.getElementById(`badge${team.id}`);
+                    badgeEl.textContent = team.hearts > 0 ? "💔 -1 NYAWA" : "💀 NYAWA HABIS!";
+                    badgeEl.className = "px-2 py-0.5 text-[11px] font-extrabold rounded-full bg-red-600 text-white border border-red-950 animate-bounce";
+                    badgeEl.classList.remove('hidden');
+                    this.updateTopHUD();
+
+                    // Setelah 1.2 detik, karakter muncul kembali (✨💨) & langsung berlari lagi!
+                    setTimeout(() => {
+                        team.beast.phase = 'retreating';
+                        if (team.hearts > 0) {
+                            team.mood = 'happy';
+                            team.invincibleTimer = 2.0;
+                            team.progressRatio = Math.max(0.16, team.targetRatio - 0.05);
+                            this.sound.playRespawn();
+                            this.spawnRespawnSparkles(this.canvas.width * team.progressRatio, this.getLaneY(team.id) - 25);
+                        } else {
+                            team.alive = false;
+                            team.mood = 'out';
+                        }
+                        this.updateTopHUD();
+                    }, 1200);
+                }, 1350);
+            }
+
+            spawnCartoonEatCloud(x, y, emoji) {
+                for (let i = 0; i < 18; i++) {
+                    const angle = (Math.PI * 2 * i) / 18;
+                    const speed = 2 + Math.random() * 5;
+                    this.eatExplosions.push({
+                        x,
+                        y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        r: 18 + Math.random() * 22,
+                        life: 1.0,
+                        color: i % 2 === 0 ? '#f8fafc' : '#fde047',
+                        symbol: i % 5 === 0 ? '💥' : (i % 5 === 2 ? '😱' : null)
+                    });
+                }
+                // Balon teriakan "AAA! TOLONG!!" saat karakter tertelan hewan
+                this.eatExplosions.push({
+                    x,
+                    y: y - 36,
+                    vx: 0,
+                    vy: -1.1,
+                    r: 26,
+                    life: 1.25,
+                    color: '#ef4444',
+                    screamText: "AAA! TOLONG!!"
+                });
+            }
+
+            spawnRespawnSparkles(x, y) {
+                for (let i = 0; i < 14; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 1.5 + Math.random() * 4;
+                    this.eatExplosions.push({
+                        x,
+                        y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        r: 10,
+                        life: 0.9,
+                        color: '#bae6fd',
+                        symbol: i % 2 === 0 ? '✨' : '💨'
+                    });
+                }
+            }
+
+            advanceToNextQuestion() {
+                ['A', 'B'].forEach(tKey => {
+                    document.getElementById(`badge${tKey}`).classList.add('hidden');
+                    this.teams[tKey].beast.active = false;
+                });
+                this.loadQuestion(this.questionIndex + 1);
+            }
+
+            /**
+             * UPDATE HUD ATAS (NYAWA, SKOR, SHIELD, DAN PROGRESS BAR AREA)
+             */
+            updateTopHUD() {
+                ['A', 'B'].forEach(tKey => {
+                    const t = this.teams[tKey];
+                    const heartsEl = document.getElementById(`hearts${tKey}`);
+                    if (t.hearts > 0) {
+                        heartsEl.textContent = "❤️".repeat(t.hearts) + "🖤".repeat(3 - t.hearts);
+                    } else {
+                        heartsEl.textContent = "💀 HABIS";
+                    }
+                    document.getElementById(`score${tKey}`).textContent = t.score;
+                    const shieldEl = document.getElementById(`shieldIcon${tKey}`);
+                    if (t.shield) shieldEl.classList.remove('hidden');
+                    else shieldEl.classList.add('hidden');
+                });
+
+                const qNum = Math.min(15, this.questionIndex + 1);
+                document.getElementById('questionCounterText').textContent = `SOAL ${qNum} / 15`;
+
+                const biome = BIOMES[this.currentBiomeId] || BIOMES[1];
+                document.getElementById('biomeTitleText').textContent = biome.name;
+
+                const pct = Math.min(100, Math.round(((this.questionIndex + 1) / 15) * 100));
+                document.getElementById('progressFill').style.width = `${pct}%`;
+
+                for (let i = 1; i <= 6; i++) {
+                    const node = document.getElementById(`stageNode${i}`);
+                    if (!node) continue;
+                    if (i === this.currentBiomeId) {
+                        node.className = "scale-125 drop-shadow transition-transform";
+                    } else if (i < this.currentBiomeId) {
+                        node.className = "opacity-100";
+                    } else {
+                        node.className = "opacity-50";
+                    }
+                }
+            }
+
+            /**
+             * FINISH & HARTA KARUN TERBUKA SETELAH SOAL 15
+             */
+            triggerFinishSequence() {
+                this.state = 'FINISH';
+                this.currentBiomeId = 6;
+                this.darknessOverlay = 0;
+                this.bossLion.active = false;
+                this.finishLineX = this.canvas.width * 0.78;
+                this.treasureOpen = true;
+                this.sound.stopBGM();
+                this.sound.playVictory();
+                this.updateTopHUD();
+
+                // Munculkan Confetti Meriah
+                for (let i = 0; i < 90; i++) {
+                    this.confetti.push({
+                        x: Math.random() * this.canvas.width,
+                        y: -20 - Math.random() * 200,
+                        vx: -2 + Math.random() * 4,
+                        vy: 2.5 + Math.random() * 4.5,
+                        color: ['#facc15', '#38bdf8', '#f43f5e', '#4ade80', '#a855f7'][i % 5],
+                        size: 6 + Math.random() * 6,
+                        rot: Math.random() * Math.PI
+                    });
+                }
+
+                // Tampilkan modal hasil akhir setelah 2.4 detik perayaan harta karun
+                setTimeout(() => this.showFinalModal(), 2400);
+            }
+
+            showFinalModal() {
+                const A = this.teams.A;
+                const B = this.teams.B;
+
+                document.getElementById('finalScoreA').textContent = A.score;
+                document.getElementById('finalLivesA').textContent = A.hearts;
+                document.getElementById('finalHeartsIconsA').textContent = A.hearts > 0 ? "❤️".repeat(A.hearts) : "💀";
+
+                document.getElementById('finalScoreB').textContent = B.score;
+                document.getElementById('finalLivesB').textContent = B.hearts;
+                document.getElementById('finalHeartsIconsB').textContent = B.hearts > 0 ? "❤️".repeat(B.hearts) : "💀";
+
+                const winnerTitle = document.getElementById('winnerTitle');
+                if (A.score > B.score || (A.score === B.score && A.hearts > B.hearts)) {
+                    winnerTitle.textContent = "🔵 KELOMPOK A!";
+                } else if (B.score > A.score || (B.score === A.score && B.hearts > A.hearts)) {
+                    winnerTitle.textContent = "🔴 KELOMPOK B!";
+                } else {
+                    winnerTitle.textContent = "🤝 HASIL IMBANG!";
+                }
+
+                document.getElementById('resultModal').classList.remove('hidden');
+            }
+
+            getLaneY(teamId) {
+                const h = this.canvas.height;
+                return teamId === 'A' ? h * 0.67 : h * 0.87;
+            }
+
+            /**
+             * MAIN 60FPS ANIMATION LOOP (KARAKTER & DUNIA SELALU BERGERAK!)
+             */
+            gameLoop(now) {
+                const dt = Math.min(0.05, (now - this.lastFrameTime) / 1000);
+                this.lastFrameTime = now;
+
+                this.updatePhysics(dt);
+                this.renderScene();
+
+                requestAnimationFrame((t) => this.gameLoop(t));
+            }
+
+            updatePhysics(dt) {
+                const w = this.canvas.width;
+                const speed = this.currentWorldSpeed * 60 * dt;
+                this.worldDistance += speed;
+
+                if (this.cameraShake > 0) {
+                    this.cameraShake = Math.max(0, this.cameraShake - 40 * dt);
+                }
+
+                // Parallax Awan, Gunung, Pohon, dan Semak
+                this.clouds.forEach(c => {
+                    c.x -= speed * 0.15;
+                    if (c.x < -150) c.x = w + 120;
+                });
+
+                this.mountains.forEach(m => {
+                    m.x -= speed * 0.28;
+                    if (m.x + m.w < -50) m.x = w + 180;
+                });
+
+                this.trees.forEach(t => {
+                    t.x -= speed * 0.65;
+                    if (t.x < -100) t.x = w + 100 + Math.random() * 80;
+                });
+
+                this.bushes.forEach(b => {
+                    b.x -= speed * 0.95;
+                    if (b.x < -90) b.x = w + 80 + Math.random() * 60;
+                });
+
+                // Burung & Kupu-Kupu
+                this.birds.forEach(b => {
+                    b.x -= speed * 0.45;
+                    b.wingPhase += 10 * dt;
+                    if (b.x < -60) b.x = w + 80;
+                });
+
+                this.butterflies.forEach(bf => {
+                    bf.x -= speed * 0.55;
+                    bf.phase += 8 * dt;
+                    bf.y += Math.sin(bf.phase) * 0.9;
+                    if (bf.x < -40) bf.x = w + 60;
+                });
+
+                // Update Karakter Kelompok A dan Kelompok B (SELALU BERLARI!)
+                ['A', 'B'].forEach(tKey => {
+                    const t = this.teams[tKey];
+                    if (!t.alive) return;
+
+                    // Kecepatan siklus kaki & tangan saat berlari
+                    const cycleRate = 15.5 * t.runSpeedMultiplier;
+                    t.runCycle += cycleRate * dt;
+
+                    if (t.boostTimer > 0) {
+                        t.boostTimer -= dt;
+                        if (t.boostTimer <= 0 && t.mood === 'boost') {
+                            t.mood = 'happy';
+                            t.runSpeedMultiplier = 1.0;
+                        }
+                    }
+
+                    if (t.invincibleTimer > 0) {
+                        t.invincibleTimer -= dt;
+                    }
+
+                    // Interpolasi maju/mundur di lintasan
+                    t.progressRatio += (t.targetRatio - t.progressRatio) * 3.5 * dt;
+
+                    // Spawn partikel debu lari di belakang sepatu
+                    if (t.mood !== 'eaten' && Math.random() < 0.55) {
+                        const charX = w * t.progressRatio;
+                        const charY = this.getLaneY(t.id);
+                        this.dustParticles.push({
+                            x: charX - 18,
+                            y: charY - 4 + (Math.random() - 0.5) * 6,
+                            vx: -speed * 0.6 - Math.random() * 2,
+                            vy: -0.5 - Math.random() * 1.5,
+                            r: t.mood === 'boost' ? 7 + Math.random() * 5 : 4 + Math.random() * 4,
+                            life: 1.0,
+                            isBoost: t.mood === 'boost'
+                        });
+                    }
+
+                    // Update Hewan Buas yang Mengejar
+                    if (t.beast.active) {
+                        t.beast.jawOpen += 14 * dt;
+                        if (t.beast.phase === 'chasing') {
+                            const targetX = t.progressRatio - 0.04;
+                            t.beast.xRatio += (targetX - t.beast.xRatio) * 3.8 * dt;
+                        } else if (t.beast.phase === 'biting') {
+                            t.beast.xRatio = t.progressRatio;
+                        } else if (t.beast.phase === 'retreating') {
+                            t.beast.xRatio -= 0.45 * dt;
+                        }
+                    }
+                });
+
+                // Update Partikel Debu, Daun, dan Efek Kartun
+                for (let i = this.dustParticles.length - 1; i >= 0; i--) {
+                    const p = this.dustParticles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= 2.2 * dt;
+                    if (p.life <= 0) this.dustParticles.splice(i, 1);
+                }
+
+                for (let i = this.leafParticles.length - 1; i >= 0; i--) {
+                    const lp = this.leafParticles[i];
+                    lp.x += lp.vx;
+                    lp.y += lp.vy;
+                    lp.rot += 5 * dt;
+                    lp.life -= 1.1 * dt;
+                    if (lp.life <= 0) this.leafParticles.splice(i, 1);
+                }
+
+                for (let i = this.eatExplosions.length - 1; i >= 0; i--) {
+                    const ex = this.eatExplosions[i];
+                    ex.x += ex.vx;
+                    ex.y += ex.vy;
+                    ex.life -= 1.2 * dt;
+                    if (ex.life <= 0) this.eatExplosions.splice(i, 1);
+                }
+
+                for (let i = this.confetti.length - 1; i >= 0; i--) {
+                    const cf = this.confetti[i];
+                    cf.x += cf.vx;
+                    cf.y += cf.vy;
+                    cf.rot += 4 * dt;
+                    if (cf.y > this.canvas.height + 20) cf.y = -15;
+                }
+            }
+
+            /**
+             * RENDER VISUAL DUNIA PETUALANGAN, LINTASAN, HEWAN BUAS, DAN 2 KARAKTER 3D KARTUN
+             */
+            renderScene() {
+                const ctx = this.ctx;
+                const w = this.canvas.width;
+                const h = this.canvas.height;
+                const biome = BIOMES[this.currentBiomeId] || BIOMES[1];
+
+                ctx.save();
+                if (this.cameraShake > 0) {
+                    ctx.translate((Math.random() - 0.5) * this.cameraShake, (Math.random() - 0.5) * this.cameraShake);
+                }
+
+                // 1. LANGIT GRADIENT SESUAI AREA
+                const skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.52);
+                skyGrad.addColorStop(0, biome.skyTop);
+                skyGrad.addColorStop(1, biome.skyBottom);
+                ctx.fillStyle = skyGrad;
+                ctx.fillRect(0, 0, w, h);
+
+                // 2. AWAN & BURUNG
+                this.clouds.forEach(c => this.drawCloud(ctx, c.x, c.y, c.scale));
+                this.birds.forEach(b => this.drawBird(ctx, b.x, b.y, b.wingPhase));
+
+                // 3. PEGUNUNGAN PARALLAX
+                this.mountains.forEach(m => {
+                    ctx.fillStyle = biome.mountainColor;
+                    ctx.beginPath();
+                    ctx.moveTo(m.x, h * 0.52);
+                    ctx.lineTo(m.x + m.w * 0.5, h * 0.52 - m.h);
+                    ctx.lineTo(m.x + m.w, h * 0.52);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Puncak bersalju/cahaya
+                    ctx.fillStyle = "rgba(255,255,255,0.22)";
+                    ctx.beginPath();
+                    ctx.moveTo(m.x + m.w * 0.5, h * 0.52 - m.h);
+                    ctx.lineTo(m.x + m.w * 0.36, h * 0.52 - m.h * 0.62);
+                    ctx.lineTo(m.x + m.w * 0.64, h * 0.52 - m.h * 0.62);
+                    ctx.closePath();
+                    ctx.fill();
+                });
+
+                // 4. PADANG RUMPUT & SUNGAI
+                ctx.fillStyle = biome.groundGrass;
+                ctx.fillRect(0, h * 0.48, w, h * 0.52);
+
+                if (biome.hasRiver) {
+                    ctx.fillStyle = "#0284c7";
+                    ctx.fillRect(0, h * 0.47, w, h * 0.06);
+                    // Jembatan Kayu
+                    ctx.fillStyle = "#78350f";
+                    for (let bx = -(this.worldDistance % 40); bx < w; bx += 40) {
+                        ctx.fillRect(bx, h * 0.49, 32, 10);
+                    }
+                }
+
+                // 5. POHON-POHON HUTAN PARALLAX
+                this.trees.forEach(t => {
+                    this.drawCartoonTree(ctx, t.x, h * 0.51, t.scale, t.variant === 0 ? biome.treeColor1 : biome.treeColor2);
+                });
+
+                // Kabut tipis untuk Gunung Misterius
+                if (biome.hasFog) {
+                    const fogGrad = ctx.createLinearGradient(0, h * 0.35, 0, h * 0.55);
+                    fogGrad.addColorStop(0, "rgba(226, 232, 240, 0)");
+                    fogGrad.addColorStop(0.5, "rgba(226, 232, 240, 0.38)");
+                    fogGrad.addColorStop(1, "rgba(226, 232, 240, 0)");
+                    ctx.fillStyle = fogGrad;
+                    ctx.fillRect(0, h * 0.35, w, h * 0.2);
+                }
+
+                // 6. DUA JALUR LARI TANAH PETUALANGAN (JALUR A & JALUR B)
+                this.drawRunningLanes(ctx, w, h, biome);
+
+                // 7. SEMAK-SEMAK & BATU DI TEPI LINTASAN
+                this.bushes.forEach(b => {
+                    this.drawBush(ctx, b.x, h * 0.51, b.w, biome.treeColor1);
+                });
+
+                // 8. ITEM BONUS DI LINTASAN (🪙 Koin, ⚡ Boost, 🛡️ Shield, ❤️ Heart)
+                this.trackItems.forEach(item => {
+                    if (item.collected) return;
+                    const ix = w * item.xRatio;
+                    const iy = this.getLaneY(item.team) - 24 + Math.sin(this.worldDistance * 0.05) * 4;
+                    ctx.save();
+                    ctx.font = "24px sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(item.icon, ix, iy);
+                    ctx.restore();
+                });
+
+                // 9. GARIS FINISH & PETI HARTA KARUN (PADA SOAL 15 / FINISH)
+                if (this.questionIndex === 14 || this.state === 'FINISH') {
+                    this.drawTreasureAndFinish(ctx, w * 0.86, h);
+                }
+
+                // 10. PARTIKEL DEBU LARI
+                this.dustParticles.forEach(p => {
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, p.life);
+                    ctx.fillStyle = p.isBoost ? "#facc15" : "rgba(254, 243, 199, 0.75)";
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+
+                // 11. GAMBAR KARAKTER & HEWAN BUAS PER JALUR (A DI ATAS, B DI BAWAH)
+                ['A', 'B'].forEach(tKey => {
+                    const team = this.teams[tKey];
+                    const laneY = this.getLaneY(tKey);
+                    const charX = w * team.progressRatio;
+
+                    // Gambar Karakter jika masih aktif dan tidak sedang tertelan di perut hewan
+                    if (team.alive && team.mood !== 'eaten') {
+                        this.drawAdventurerCharacter(ctx, charX, laneY, team);
+                    }
+
+                    // Gambar Hewan Buas Pemangsa jika sedang mengejar/menerkam
+                    if (team.beast.active) {
+                        const beastX = w * team.beast.xRatio;
+                        this.drawWildBeast(ctx, beastX, laneY, team.beast);
+                    }
+                });
+
+                // 12. BOSS RAJA SINGA PENJAGA HARTA KARUN (SOAL 15)
+                if (this.bossLion.active) {
+                    this.drawBossGuardian(ctx, w * 0.88, h * 0.78);
+                }
+
+                // 13. EFEK KARTUN DIMAKAN (💥, 😱, TERIAKAN TOLONG, ASAP) & DAUN BETERBANGAN
+                this.eatExplosions.forEach(ex => {
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, ex.life);
+                    if (ex.screamText) {
+                        // Gambar balon teriakan darurat saat dimakan hewan
+                        const shakeX = (Math.random() - 0.5) * 6;
+                        const shakeY = (Math.random() - 0.5) * 6;
+                        ctx.translate(ex.x + shakeX, ex.y + shakeY);
+                        ctx.fillStyle = "#fef2f2";
+                        ctx.strokeStyle = "#dc2626";
+                        ctx.lineWidth = 3.5;
+                        ctx.beginPath();
+                        ctx.roundRect(-68, -20, 136, 34, 12);
+                        ctx.fill();
+                        ctx.stroke();
+
+                        ctx.fillStyle = "#dc2626";
+                        ctx.font = "900 15px 'Fredoka', sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "middle";
+                        ctx.fillText(ex.screamText, 0, -3);
+                    } else {
+                        ctx.fillStyle = ex.color;
+                        ctx.beginPath();
+                        ctx.arc(ex.x, ex.y, ex.r, 0, Math.PI * 2);
+                        ctx.fill();
+                        if (ex.symbol) {
+                            ctx.font = "28px sans-serif";
+                            ctx.textAlign = "center";
+                            ctx.textBaseline = "middle";
+                            ctx.fillText(ex.symbol, ex.x, ex.y);
+                        }
+                    }
+                    ctx.restore();
+                });
+
+                this.leafParticles.forEach(lp => {
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, lp.life);
+                    ctx.translate(lp.x, lp.y);
+                    ctx.rotate(lp.rot);
+                    ctx.fillStyle = "#16a34a";
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, 8, 4, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+
+                // Kupu-kupu
+                this.butterflies.forEach(bf => {
+                    ctx.save();
+                    ctx.fillStyle = bf.color;
+                    const wingW = 4 + Math.abs(Math.sin(bf.phase)) * 5;
+                    ctx.beginPath();
+                    ctx.ellipse(bf.x - 3, bf.y, wingW, 5, -0.3, 0, Math.PI * 2);
+                    ctx.ellipse(bf.x + 3, bf.y, wingW, 5, 0.3, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+
+                // 14. PENCAHAYAAN DRAMATIS SAAT MENEGANGKAN / DISERANG
+                if (this.darknessOverlay > 0) {
+                    ctx.fillStyle = `rgba(15, 23, 42, ${this.darknessOverlay})`;
+                    ctx.fillRect(0, 0, w, h);
+
+                    // Vignette merah dramatis di pinggir layar
+                    const radGrad = ctx.createRadialGradient(w * 0.5, h * 0.5, h * 0.25, w * 0.5, h * 0.5, w * 0.65);
+                    radGrad.addColorStop(0, "rgba(0,0,0,0)");
+                    radGrad.addColorStop(1, "rgba(127, 29, 29, 0.42)");
+                    ctx.fillStyle = radGrad;
+                    ctx.fillRect(0, 0, w, h);
+                }
+
+                // 15. CONFETTI SAAT FINISH
+                this.confetti.forEach(cf => {
+                    ctx.save();
+                    ctx.translate(cf.x, cf.y);
+                    ctx.rotate(cf.rot);
+                    ctx.fillStyle = cf.color;
+                    ctx.fillRect(-cf.size / 2, -cf.size / 2, cf.size, cf.size * 0.6);
+                    ctx.restore();
+                });
+
+                ctx.restore();
+            }
+
+            drawRunningLanes(ctx, w, h, biome) {
+                const laneAY = this.getLaneY('A');
+                const laneBY = this.getLaneY('B');
+                const laneH = h * 0.14;
+
+                // Jalur A (Atas)
+                ctx.fillStyle = biome.trackTop;
+                ctx.fillRect(0, laneAY - laneH * 0.65, w, laneH);
+                ctx.fillStyle = "#3b82f6";
+                ctx.fillRect(0, laneAY - laneH * 0.65, w, 5);
+
+                // Jalur B (Bawah)
+                ctx.fillStyle = biome.trackBottom;
+                ctx.fillRect(0, laneBY - laneH * 0.65, w, laneH);
+                ctx.fillStyle = "#ef4444";
+                ctx.fillRect(0, laneBY - laneH * 0.65, w, 5);
+
+                // Garis batu kerikil bergerak di sepanjang lintasan agar gerakan lari terasa sangat cepat
+                ctx.fillStyle = "rgba(255,255,255,0.22)";
+                const step = 90;
+                const offset = this.worldDistance % step;
+                for (let x = -offset; x < w; x += step) {
+                    ctx.beginPath();
+                    ctx.roundRect(x, laneAY - 8, 34, 5, 3);
+                    ctx.roundRect(x + 40, laneBY - 8, 34, 5, 3);
+                    ctx.fill();
+                }
+            }
+
+            /**
+             * MENGGAMBAR KARAKTER ANAK PETUALANG GAYA KARTUN 3D CUTE & EKSPRESIF
+             * (Kaki bergerak, tangan bergerak, ransel memantul, rambut/topi bergerak)
+             */
+            drawAdventurerCharacter(ctx, x, groundY, team) {
+                const isBoy = team.id === 'A';
+                const cycle = team.runCycle;
+                const bounce = Math.abs(Math.sin(cycle)) * 7; // Pantulan badan saat berlari
+                const legSwing = Math.sin(cycle) * 0.72;
+                const armSwing = Math.cos(cycle) * 0.75;
+
+                ctx.save();
+                ctx.translate(x, groundY);
+
+                // Efek berkedip lembut saat baru respawn
+                if (team.invincibleTimer > 0 && Math.floor(team.invincibleTimer * 10) % 2 === 0) {
+                    ctx.globalAlpha = 0.65;
+                }
+
+                // Bayangan di tanah
+                ctx.fillStyle = "rgba(0,0,0,0.28)";
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 22 - bounce * 0.4, 6, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Garis Kecepatan Boost (⚡💨💨💨)
+                if (team.mood === 'boost') {
+                    ctx.strokeStyle = "#facc15";
+                    ctx.lineWidth = 3;
+                    for (let i = 0; i < 3; i++) {
+                        const ly = -20 - i * 16;
+                        ctx.beginPath();
+                        ctx.moveTo(-28 - i * 8, ly);
+                        ctx.lineTo(-58 - i * 12, ly);
+                        ctx.stroke();
+                    }
+                }
+
+                // Posisi tubuh saat memantul lari dan condong ke depan
+                ctx.translate(0, -bounce);
+                ctx.rotate(team.mood === 'boost' ? 0.18 : 0.11); // Condong berlari aktif!
+
+                // 1. RANSEL PETUALANG KECIL (Bergerak mengikuti langkah lari)
+                const packBounce = Math.sin(cycle * 2) * 2.5;
+                ctx.fillStyle = isBoy ? "#1e40af" : "#991b1b";
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.roundRect(-22, -45 + packBounce, 15, 22, 6);
+                ctx.fill();
+                ctx.stroke();
+                // Kantong ransel
+                ctx.fillStyle = "#f59e0b";
+                ctx.beginPath();
+                ctx.roundRect(-20, -38 + packBounce, 10, 8, 3);
+                ctx.fill();
+
+                // 2. KAKI BELAKANG & SEPATU OLAHRAGA
+                this.drawRunnerLeg(ctx, -2, -22, -legSwing, team.primaryColor, "#ffffff");
+
+                // 3. TANGAN BELAKANG (Terangkat ke atas jika panik teriak minta tolong!)
+                const backArmAngle = team.mood === 'panic'
+                    ? -2.35 + Math.sin(cycle * 2) * 0.45
+                    : armSwing;
+                this.drawRunnerArm(ctx, 2, -40, backArmAngle, team.lightColor);
+
+                // 4. BADAN / PAKAIAN PETUALANG
+                const bodyGrad = ctx.createLinearGradient(-12, -46, 12, -20);
+                bodyGrad.addColorStop(0, team.lightColor);
+                bodyGrad.addColorStop(1, team.primaryColor);
+                ctx.fillStyle = bodyGrad;
+                ctx.beginPath();
+                ctx.roundRect(-12, -46, 24, 26, 9);
+                ctx.fill();
+                ctx.stroke();
+
+                // Sabuk Petualang Kecil
+                ctx.fillStyle = "#78350f";
+                ctx.fillRect(-11, -27, 22, 4);
+                ctx.fillStyle = "#fbbf24";
+                ctx.fillRect(-3, -28, 7, 6);
+
+                // 5. KAKI DEPAN & SEPATU OLAHRAGA
+                this.drawRunnerLeg(ctx, 2, -22, legSwing, team.primaryColor, "#ffffff");
+
+                // 6. KEPALA KARTUN 3D CUTE (Sedikit Besar & Ekspresif)
+                ctx.save();
+                ctx.translate(2, -64);
+
+                // Ekor Rambut Kuncir Kuda untuk Anak Perempuan (Kelompok B)
+                if (!isBoy) {
+                    const hairWave = Math.sin(cycle * 2) * 0.25;
+                    ctx.save();
+                    ctx.translate(-16, -4);
+                    ctx.rotate(hairWave);
+                    ctx.fillStyle = "#451a03";
+                    ctx.beginPath();
+                    ctx.ellipse(-8, 2, 12, 6, -0.3, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    // Pita Merah
+                    ctx.fillStyle = "#ef4444";
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Wajah / Kepala dengan 3D Shading
+                const skinGrad = ctx.createRadialGradient(-4, -4, 3, 0, 0, 20);
+                skinGrad.addColorStop(0, "#ffedd5");
+                skinGrad.addColorStop(1, "#fdba74");
+                ctx.fillStyle = skinGrad;
+                ctx.beginPath();
+                ctx.arc(0, 0, 18.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Pipi Merona Cute
+                ctx.fillStyle = "rgba(244, 63, 94, 0.35)";
+                ctx.beginPath();
+                ctx.ellipse(9, 4, 4, 2.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // MATA BESAR EKSPRESIF
+                if (team.mood === 'panic') {
+                    // Ekspresi Panik Berteriak (😱) saat dikejar hewan
+                    ctx.fillStyle = "#ffffff";
+                    ctx.beginPath();
+                    ctx.arc(8, -3, 6.2, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.fillStyle = "#0f172a";
+                    ctx.beginPath();
+                    ctx.arc(9, -3, 2.0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Mulut Terbuka Lebar Berteriak "TOLONG!"
+                    ctx.fillStyle = "#7f1d1d";
+                    ctx.beginPath();
+                    ctx.ellipse(9, 7, 6.5, 7.5, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    // Lidah bergetar di dalam mulut
+                    ctx.fillStyle = "#fb7185";
+                    ctx.beginPath();
+                    ctx.arc(8, 10, 3.5, 0, Math.PI, true);
+                    ctx.fill();
+                    // Tetes Keringat Panik Bercucuran
+                    ctx.fillStyle = "#38bdf8";
+                    ctx.beginPath();
+                    ctx.arc(-7, -6, 3.2, 0, Math.PI * 2);
+                    ctx.arc(-11, 2, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Ekspresi Ramah & Semangat Berlari
+                    ctx.fillStyle = "#0f172a";
+                    ctx.beginPath();
+                    ctx.ellipse(8, -2, 3.8, 4.8, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Kilau Mata Cute
+                    ctx.fillStyle = "#ffffff";
+                    ctx.beginPath();
+                    ctx.arc(9.2, -3.8, 1.6, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Senyum Ceria Petualang
+                    ctx.strokeStyle = "#7c2d12";
+                    ctx.lineWidth = 2.2;
+                    ctx.beginPath();
+                    ctx.arc(8, 5, 4.5, 0.1, Math.PI * 0.85);
+                    ctx.stroke();
+                }
+
+                // Rambut & Topi Petualang (Biru untuk A, Merah untuk B)
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+                ctx.fillStyle = "#451a03";
+                ctx.beginPath();
+                ctx.arc(-2, -4, 18, Math.PI * 0.9, Math.PI * 1.95);
+                ctx.fill();
+
+                // Topi Petualang Cilik
+                ctx.fillStyle = team.primaryColor;
+                ctx.beginPath();
+                ctx.arc(0, -6, 18, Math.PI, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                // Lidah Topi
+                ctx.fillStyle = team.lightColor;
+                ctx.beginPath();
+                ctx.roundRect(4, -9, 18, 5, 3);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+
+                // 7. TANGAN DEPAN (Terangkat melambai panik jika dikejar hewan)
+                const frontArmAngle = team.mood === 'panic'
+                    ? -2.15 - Math.sin(cycle * 2) * 0.45
+                    : -armSwing;
+                this.drawRunnerArm(ctx, -1, -40, frontArmAngle, team.lightColor);
+
+                // 8. BALON TERIAKAN "TOLONG!!" DI ATAS KEPALA SAAT DIKEJAR HEWAN
+                if (team.mood === 'panic') {
+                    ctx.save();
+                    const jitterX = (Math.random() - 0.5) * 4;
+                    const jitterY = (Math.random() - 0.5) * 4;
+                    ctx.translate(10 + jitterX, -98 + jitterY);
+                    ctx.rotate(-0.1);
+
+                    // Balon komik teriakan
+                    ctx.fillStyle = "#ffffff";
+                    ctx.strokeStyle = "#dc2626";
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.roundRect(-52, -16, 104, 28, 10);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Ekor balon mengarah ke mulut karakter
+                    ctx.beginPath();
+                    ctx.moveTo(-10, 12);
+                    ctx.lineTo(-4, 20);
+                    ctx.lineTo(4, 12);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#dc2626";
+                    ctx.font = "900 13px 'Fredoka', sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText("😱 TOLONG!!", 0, -2);
+                    ctx.restore();
+                }
+
+                // 9. PERISAI PELINDUNG (Jika memiliki 🛡️ Shield)
+                if (team.shield) {
+                    ctx.strokeStyle = "rgba(56, 189, 248, 0.85)";
+                    ctx.fillStyle = "rgba(56, 189, 248, 0.18)";
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(0, -40, 38, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+
+            drawRunnerLeg(ctx, hipX, hipY, angle, pantsColor, shoeColor) {
+                ctx.save();
+                ctx.translate(hipX, hipY);
+                ctx.rotate(angle);
+
+                // Celana Petualang
+                ctx.fillStyle = "#1e293b";
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                ctx.roundRect(-4.5, 0, 9, 15, 4);
+                ctx.fill();
+                ctx.stroke();
+
+                // Sepatu Olahraga
+                ctx.translate(0, 15);
+                ctx.fillStyle = pantsColor;
+                ctx.beginPath();
+                ctx.roundRect(-4, 0, 14, 7, 3.5);
+                ctx.fill();
+                ctx.stroke();
+                // Sol Putih Sepatu
+                ctx.fillStyle = shoeColor;
+                ctx.fillRect(-4, 5, 14, 2.5);
+
+                ctx.restore();
+            }
+
+            drawRunnerArm(ctx, shoulderX, shoulderY, angle, sleeveColor) {
+                ctx.save();
+                ctx.translate(shoulderX, shoulderY);
+                ctx.rotate(angle);
+
+                ctx.fillStyle = sleeveColor;
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                ctx.roundRect(-4, 0, 8, 15, 4);
+                ctx.fill();
+                ctx.stroke();
+
+                // Tangan Kecil
+                ctx.fillStyle = "#fdba74";
+                ctx.beginPath();
+                ctx.arc(0, 16, 4.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            /**
+             * MENGGAMBAR HEWAN BUAS SECARA DETAIL MENYERUPAI BENTUK HEWAN ASLI
+             * (🐍 Ular Kobra, 🐊 Buaya Muara, 🐯 Harimau Sumatera, 🐺 Serigala Gunung, 🦁 Raja Singa)
+             */
+            drawWildBeast(ctx, x, groundY, beast) {
+                ctx.save();
+                ctx.translate(x, groundY);
+
+                // Efek kepulan debu langkah hewan buas
+                ctx.fillStyle = "rgba(254, 243, 199, 0.55)";
+                for (let i = 0; i < 3; i++) {
+                    ctx.beginPath();
+                    ctx.arc(-55 - i * 16, -4 - (i % 2) * 5, 10 - i * 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Bayangan tanah di bawah hewan
+                ctx.fillStyle = "rgba(0,0,0,0.32)";
+                ctx.beginPath();
+                ctx.ellipse(-18, 2, 48, 8, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (beast.type === 'snake') {
+                    this.drawRealisticSnake(ctx, beast.jawOpen);
+                } else if (beast.type === 'croc') {
+                    this.drawRealisticCrocodile(ctx, beast.jawOpen);
+                } else if (beast.type === 'tiger') {
+                    this.drawRealisticTiger(ctx, beast.jawOpen);
+                } else if (beast.type === 'wolf') {
+                    this.drawRealisticWolf(ctx, beast.jawOpen);
+                } else {
+                    this.drawRealisticLion(ctx, beast.jawOpen);
+                }
+
+                ctx.restore();
+            }
+
+            /**
+             * 1. ULAR KOBRA RAKSASA (Tubuh meliuk bersisik, tudung kobra mengembang, taring bisa & lidah bercabang)
+             */
+            drawRealisticSnake(ctx, phase) {
+                const wave = Math.sin(phase * 1.4) * 6;
+                const jaw = 0.25 + Math.abs(Math.sin(phase)) * 0.45;
+
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+
+                // Tubuh Ular Meliuk S-Curve
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 22;
+                ctx.beginPath();
+                ctx.moveTo(-95, -6);
+                ctx.bezierCurveTo(-68, -28 + wave, -42, 4 - wave, -16, -12);
+                ctx.quadraticCurveTo(0, -24, 6, -54);
+                ctx.stroke();
+
+                // Warna Punggung Hijau Zamrud & Corak Belah Ketupat
+                ctx.strokeStyle = "#15803d";
+                ctx.lineWidth = 17;
+                ctx.stroke();
+
+                // Sisik Perut Kuning Kehijauan
+                ctx.strokeStyle = "#bef264";
+                ctx.lineWidth = 6;
+                ctx.beginPath();
+                ctx.moveTo(-90, -2);
+                ctx.bezierCurveTo(-65, -22 + wave, -40, 8 - wave, -14, -8);
+                ctx.stroke();
+
+                // Tudung Kobra Mengembang (Leher)
+                ctx.save();
+                ctx.translate(4, -46);
+                ctx.fillStyle = "#166534";
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.ellipse(-2, 4, 16, 24, 0.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Pola garis sisik pada tudung kobra
+                ctx.fillStyle = "#fde047";
+                ctx.beginPath();
+                ctx.ellipse(2, 4, 9, 16, 0.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                // Kepala Ular & Rahang Menganga
+                ctx.save();
+                ctx.translate(10, -60);
+
+                // Lidah Merah Bercabang Menjulur
+                const tongueLen = 18 + Math.sin(phase * 3) * 6;
+                ctx.strokeStyle = "#ef4444";
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(14, 0);
+                ctx.lineTo(14 + tongueLen, 0);
+                ctx.lineTo(20 + tongueLen, -5);
+                ctx.moveTo(14 + tongueLen, 0);
+                ctx.lineTo(20 + tongueLen, 5);
+                ctx.stroke();
+
+                // Rahang Atas Ular
+                ctx.save();
+                ctx.rotate(-jaw);
+                ctx.fillStyle = "#15803d";
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(-12, -6);
+                ctx.quadraticCurveTo(8, -14, 28, -2);
+                ctx.lineTo(24, 4);
+                ctx.lineTo(-10, 4);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Taring Bisa Tajam Melengkung
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.moveTo(16, 3);
+                ctx.lineTo(19, 14);
+                ctx.lineTo(22, 3);
+                ctx.moveTo(10, 3);
+                ctx.lineTo(12, 11);
+                ctx.lineTo(15, 3);
+                ctx.fill();
+
+                // Mata Reptil Kuning dengan Pupil Vertikal
+                ctx.fillStyle = "#facc15";
+                ctx.beginPath();
+                ctx.ellipse(8, -5, 5, 3.8, -0.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = "#0f172a";
+                ctx.beginPath();
+                ctx.ellipse(9, -5, 1.3, 3.4, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                // Rahang Bawah Ular
+                ctx.save();
+                ctx.rotate(jaw * 0.85);
+                ctx.fillStyle = "#86efac";
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                ctx.moveTo(-8, 2);
+                ctx.lineTo(24, 2);
+                ctx.quadraticCurveTo(12, 10, -8, 8);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.restore();
+            }
+
+            /**
+             * 2. BUAYA MUARA (Tubuh panjang bersisik tajam, ekor bergerigi, kaki merangkak cepat, moncong panjang penuh gigi)
+             */
+            drawRealisticCrocodile(ctx, phase) {
+                const legWalk = Math.sin(phase * 1.5) * 8;
+                const jaw = 0.2 + Math.abs(Math.sin(phase)) * 0.48;
+
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+
+                // Ekor Berotot Panjang & Sisik Punggung Tajam (Scutes)
+                ctx.fillStyle = "#14532d";
+                ctx.beginPath();
+                ctx.moveTo(-45, -18);
+                ctx.quadraticCurveTo(-82, -22, -108, -8 + Math.sin(phase) * 4);
+                ctx.quadraticCurveTo(-78, -4, -45, -6);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Duri-duri Sisik Punggung & Ekor
+                ctx.fillStyle = "#166534";
+                for (let sx = -88; sx <= -10; sx += 13) {
+                    ctx.beginPath();
+                    ctx.moveTo(sx, -20);
+                    ctx.lineTo(sx + 6, -30);
+                    ctx.lineTo(sx + 11, -20);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                // Badan Buaya Berlapis Perisai Sisik
+                ctx.fillStyle = "#15803d";
+                ctx.beginPath();
+                ctx.ellipse(-22, -14, 34, 13, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Perut Kuning Muda
+                ctx.fillStyle = "#bef264";
+                ctx.beginPath();
+                ctx.ellipse(-20, -7, 28, 5, 0, 0, Math.PI);
+                ctx.fill();
+
+                // Kaki Belakang & Depan (Berlari Merangkak)
+                ctx.fillStyle = "#166534";
+                ctx.beginPath();
+                ctx.roundRect(-42 + legWalk, -10, 10, 14, 4);
+                ctx.roundRect(-6 - legWalk, -10, 10, 14, 4);
+                ctx.fill();
+                ctx.stroke();
+
+                // Moncong Panjang Buaya & Rahang Menganga Lebar
+                ctx.save();
+                ctx.translate(8, -18);
+
+                // Rahang Bawah Panjang + Deretan Gigi Tajam
+                ctx.save();
+                ctx.rotate(jaw * 0.65);
+                ctx.fillStyle = "#15803d";
+                ctx.beginPath();
+                ctx.roundRect(-4, 0, 44, 10, 4);
+                ctx.fill();
+                ctx.stroke();
+
+                // Lidah Merah Muda di Dalam Mulut
+                ctx.fillStyle = "#fb7185";
+                ctx.fillRect(2, -3, 30, 4);
+
+                // Deretan Gigi Bawah
+                ctx.fillStyle = "#ffffff";
+                for (let gx = 4; gx < 36; gx += 7) {
+                    ctx.beginPath();
+                    ctx.moveTo(gx, 0);
+                    ctx.lineTo(gx + 2.5, -7);
+                    ctx.lineTo(gx + 5, 0);
+                    ctx.fill();
+                }
+                ctx.restore();
+
+                // Rahang Atas Panjang + Tonjolan Hidung & Mata Buaya
+                ctx.save();
+                ctx.rotate(-jaw);
+                ctx.fillStyle = "#166534";
+                ctx.beginPath();
+                ctx.moveTo(-8, -12);
+                ctx.lineTo(4, -15);
+                ctx.lineTo(36, -10);
+                ctx.arc(38, -6, 6, -Math.PI / 2, Math.PI / 2);
+                ctx.lineTo(-8, 0);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Deretan Gigi Atas
+                ctx.fillStyle = "#ffffff";
+                for (let gx = 2; gx < 35; gx += 7) {
+                    ctx.beginPath();
+                    ctx.moveTo(gx, 0);
+                    ctx.lineTo(gx + 2.5, 8);
+                    ctx.lineTo(gx + 5, 0);
+                    ctx.fill();
+                }
+
+                // Mata Reptil Kuning Menonjol di Atas Kepala
+                ctx.fillStyle = "#facc15";
+                ctx.beginPath();
+                ctx.arc(0, -13, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = "#0f172a";
+                ctx.beginPath();
+                ctx.ellipse(1, -13, 1.5, 4, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                ctx.restore();
+            }
+
+            /**
+             * 3. HARIMAU SUMATERA (Tubuh kucing besar berotot, 4 kaki berlari menerkam, belang hitam asli, taring & kumis)
+             */
+            drawRealisticTiger(ctx, phase) {
+                const gallop = Math.sin(phase * 1.3);
+                const bounce = Math.abs(gallop) * 6;
+                const jaw = 0.22 + Math.abs(Math.sin(phase)) * 0.38;
+
+                ctx.save();
+                ctx.translate(0, -bounce);
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+
+                // Ekor Panjang Belang Hitam
+                ctx.strokeStyle = "#ea580c";
+                ctx.lineWidth = 8;
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.moveTo(-48, -32);
+                ctx.quadraticCurveTo(-78, -48 + gallop * 10, -90, -34);
+                ctx.stroke();
+
+                // Kaki Belakang & Kaki Depan (Siklus Lari Gallop Kucing Besar)
+                this.drawBeastQuadLeg(ctx, -40, -20, -gallop * 0.65, "#c2410c", "#ffedd5");
+                this.drawBeastQuadLeg(ctx, 4, -20, gallop * 0.65, "#c2410c", "#ffedd5");
+
+                // Badan Berotot Harimau Oranye
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = "#0f172a";
+                const bodyGrad = ctx.createLinearGradient(-48, -44, -48, -14);
+                bodyGrad.addColorStop(0, "#f97316");
+                bodyGrad.addColorStop(0.75, "#ea580c");
+                bodyGrad.addColorStop(1, "#fff7ed");
+                ctx.fillStyle = bodyGrad;
+                ctx.beginPath();
+                ctx.roundRect(-50, -42, 62, 26, 13);
+                ctx.fill();
+                ctx.stroke();
+
+                // Corak Belang Hitam Khas Harimau di Punggung
+                ctx.fillStyle = "#0f172a";
+                const stripeOffsets = [-40, -30, -20, -10, 0];
+                stripeOffsets.forEach((sx, idx) => {
+                    ctx.beginPath();
+                    ctx.moveTo(sx, -42);
+                    ctx.lineTo(sx - 3, -26 - (idx % 2) * 4);
+                    ctx.lineTo(sx + 3, -42);
+                    ctx.closePath();
+                    ctx.fill();
+                });
+
+                // Kaki Sisi Depan (Kanan)
+                this.drawBeastQuadLeg(ctx, -34, -18, -gallop * 0.5 + 0.2, "#f97316", "#ffffff");
+                this.drawBeastQuadLeg(ctx, 10, -18, gallop * 0.5 + 0.2, "#f97316", "#ffffff");
+
+                // Kepala Harimau Mengaum Garang
+                ctx.save();
+                ctx.translate(18, -38);
+
+                // Telinga Bulat Harimau dengan Bintik Putih
+                ctx.fillStyle = "#0f172a";
+                ctx.beginPath();
+                ctx.arc(-8, -16, 7, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.arc(-8, -16, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Kepala & Pipi Berbulu Putih-Oranye
+                ctx.fillStyle = "#f97316";
+                ctx.beginPath();
+                ctx.arc(0, -2, 16, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Bulu Pipi Putih & Belang Pipi
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.arc(-2, 4, 11, 0, Math.PI);
+                ctx.fill();
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-10, -4); ctx.lineTo(-3, -2);
+                ctx.moveTo(-11, 1); ctx.lineTo(-4, 2);
+                ctx.stroke();
+
+                // Rahang Atas & Moncong Harimau
+                ctx.save();
+                ctx.rotate(-jaw * 0.6);
+                ctx.fillStyle = "#f97316";
+                ctx.beginPath();
+                ctx.roundRect(2, -10, 22, 13, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                // Hidung Merah Muda Segitiga
+                ctx.fillStyle = "#fb7185";
+                ctx.beginPath();
+                ctx.arc(21, -5, 3.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Taring Panjang Harimau Atas
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.moveTo(13, 3);
+                ctx.lineTo(16, 13);
+                ctx.lineTo(19, 3);
+                ctx.fill();
+                ctx.stroke();
+
+                // Mata Kuning Menyala Garang
+                ctx.fillStyle = "#fef08a";
+                ctx.beginPath();
+                ctx.ellipse(5, -6, 4.8, 3.8, 0.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = "#0f172a";
+                ctx.beginPath();
+                ctx.arc(6, -6, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                // Rahang Bawah Menganga + Taring Bawah
+                ctx.save();
+                ctx.rotate(jaw);
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.roundRect(2, 2, 19, 9, 4);
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = "#991b1b";
+                ctx.fillRect(4, 0, 14, 4);
+                // Taring Bawah
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.moveTo(14, 2);
+                ctx.lineTo(16, -5);
+                ctx.lineTo(18, 2);
+                ctx.fill();
+                ctx.restore();
+
+                ctx.restore();
+                ctx.restore();
+            }
+
+            /**
+             * 4. SERIGALA GUNUNG (Bulu abu-abu lebat, telinga runcing, ekor lebat, moncong panjang bertaring)
+             */
+            drawRealisticWolf(ctx, phase) {
+                const gallop = Math.sin(phase * 1.35);
+                const bounce = Math.abs(gallop) * 6;
+                const jaw = 0.22 + Math.abs(Math.sin(phase)) * 0.42;
+
+                ctx.save();
+                ctx.translate(0, -bounce);
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+
+                // Ekor Serigala Lebat Berbulu
+                ctx.fillStyle = "#475569";
+                ctx.beginPath();
+                ctx.ellipse(-64, -30 + gallop * 4, 20, 8, -0.3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Kaki Sisi Belakang
+                this.drawBeastQuadLeg(ctx, -40, -20, -gallop * 0.7, "#334155", "#94a3b8");
+                this.drawBeastQuadLeg(ctx, 4, -20, gallop * 0.7, "#334155", "#94a3b8");
+
+                // Tubuh Serigala Abu-Abu Gelap & Perut Terang
+                const wolfGrad = ctx.createLinearGradient(-48, -44, -48, -14);
+                wolfGrad.addColorStop(0, "#334155");
+                wolfGrad.addColorStop(0.65, "#64748b");
+                wolfGrad.addColorStop(1, "#e2e8f0");
+                ctx.fillStyle = wolfGrad;
+                ctx.beginPath();
+                ctx.roundRect(-48, -41, 58, 24, 11);
+                ctx.fill();
+                ctx.stroke();
+
+                // Bulu Leher Runcing Lebat
+                ctx.fillStyle = "#475569";
+                ctx.beginPath();
+                ctx.arc(6, -32, 16, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Kaki Sisi Depan
+                this.drawBeastQuadLeg(ctx, -34, -18, -gallop * 0.55 + 0.2, "#64748b", "#cbd5e1");
+                this.drawBeastQuadLeg(ctx, 10, -18, gallop * 0.55 + 0.2, "#64748b", "#cbd5e1");
+
+                // Kepala Serigala & Moncong Panjang
+                ctx.save();
+                ctx.translate(16, -40);
+
+                // Dua Telinga Runcing Tegak Khas Serigala
+                ctx.fillStyle = "#334155";
+                ctx.beginPath();
+                ctx.moveTo(-10, -10);
+                ctx.lineTo(-4, -28);
+                ctx.lineTo(3, -12);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Kepala Utama
+                ctx.fillStyle = "#475569";
+                ctx.beginPath();
+                ctx.arc(0, -2, 14, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Moncong Atas Panjang & Taring Serigala
+                ctx.save();
+                ctx.rotate(-jaw * 0.55);
+                ctx.fillStyle = "#475569";
+                ctx.beginPath();
+                ctx.moveTo(2, -10);
+                ctx.lineTo(28, -6);
+                ctx.lineTo(26, 3);
+                ctx.lineTo(2, 3);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Hidung Hitam Serigala
+                ctx.fillStyle = "#0f172a";
+                ctx.beginPath();
+                ctx.arc(26, -4, 3.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Gigi Taring Tajam
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.moveTo(16, 3); ctx.lineTo(19, 12); ctx.lineTo(22, 3);
+                ctx.moveTo(10, 3); ctx.lineTo(12, 9); ctx.lineTo(14, 3);
+                ctx.fill();
+
+                // Mata Kuning Serigala Buas
+                ctx.fillStyle = "#facc15";
+                ctx.beginPath();
+                ctx.ellipse(6, -6, 4.5, 3.2, 0.25, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = "#dc2626";
+                ctx.beginPath();
+                ctx.arc(7, -6, 1.8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                // Rahang Bawah Serigala
+                ctx.save();
+                ctx.rotate(jaw);
+                ctx.fillStyle = "#cbd5e1";
+                ctx.beginPath();
+                ctx.moveTo(2, 2);
+                ctx.lineTo(24, 2);
+                ctx.lineTo(20, 9);
+                ctx.lineTo(2, 8);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.restore();
+                ctx.restore();
+            }
+
+            /**
+             * 5. RAJA SINGA (Tubuh emas kekar, surai lebat berlapis cokelat tua, 4 kaki berlari, auman bertaring)
+             */
+            drawRealisticLion(ctx, phase) {
+                const gallop = Math.sin(phase * 1.3);
+                const bounce = Math.abs(gallop) * 6;
+                const jaw = 0.25 + Math.abs(Math.sin(phase)) * 0.42;
+
+                ctx.save();
+                ctx.translate(0, -bounce);
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.5;
+
+                // Ekor Singa dengan Ujung Jambul Cokelat Tua
+                ctx.strokeStyle = "#d97706";
+                ctx.lineWidth = 6;
+                ctx.beginPath();
+                ctx.moveTo(-48, -32);
+                ctx.quadraticCurveTo(-76, -46 + gallop * 8, -86, -34);
+                ctx.stroke();
+                ctx.fillStyle = "#451a03";
+                ctx.beginPath();
+                ctx.ellipse(-88, -34, 7, 5, 0.3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Kaki Sisi Belakang
+                this.drawBeastQuadLeg(ctx, -40, -20, -gallop * 0.65, "#b45309", "#fef3c7");
+                this.drawBeastQuadLeg(ctx, 4, -20, gallop * 0.65, "#b45309", "#fef3c7");
+
+                // Badan Kekar Emas Singa
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = "#0f172a";
+                const lionGrad = ctx.createLinearGradient(-48, -44, -48, -14);
+                lionGrad.addColorStop(0, "#f59e0b");
+                lionGrad.addColorStop(1, "#d97706");
+                ctx.fillStyle = lionGrad;
+                ctx.beginPath();
+                ctx.roundRect(-50, -42, 60, 26, 12);
+                ctx.fill();
+                ctx.stroke();
+
+                // Kaki Sisi Depan
+                this.drawBeastQuadLeg(ctx, -34, -18, -gallop * 0.5 + 0.2, "#f59e0b", "#fef3c7");
+                this.drawBeastQuadLeg(ctx, 10, -18, gallop * 0.5 + 0.2, "#f59e0b", "#fef3c7");
+
+                // Surai Lebat Berlapis Khas Raja Singa (Bergelombang)
+                ctx.save();
+                ctx.translate(14, -36);
+                ctx.fillStyle = "#451a03";
+                for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
+                    const mx = Math.cos(a) * 18;
+                    const my = Math.sin(a) * 20;
+                    ctx.beginPath();
+                    ctx.arc(mx - 4, my, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.fillStyle = "#78350f";
+                ctx.beginPath();
+                ctx.arc(-2, 0, 20, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Wajah & Rahang Singa Mengaum
+                ctx.fillStyle = "#f59e0b";
+                ctx.beginPath();
+                ctx.arc(4, -2, 15, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Rahang Atas Singa
+                ctx.save();
+                ctx.rotate(-jaw * 0.6);
+                ctx.fillStyle = "#f59e0b";
+                ctx.beginPath();
+                ctx.roundRect(4, -10, 22, 14, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                // Hidung Cokelat Segitiga
+                ctx.fillStyle = "#451a03";
+                ctx.beginPath();
+                ctx.arc(23, -4, 4, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Taring Besar Singa
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.moveTo(15, 4);
+                ctx.lineTo(18, 15);
+                ctx.lineTo(22, 4);
+                ctx.fill();
+                ctx.stroke();
+
+                // Mata Merah-Kuning Raja Singa
+                ctx.fillStyle = "#fef08a";
+                ctx.beginPath();
+                ctx.ellipse(8, -6, 4.8, 3.8, 0.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = "#b91c1c";
+                ctx.beginPath();
+                ctx.arc(9, -6, 2.1, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                // Rahang Bawah Singa
+                ctx.save();
+                ctx.rotate(jaw);
+                ctx.fillStyle = "#fef3c7";
+                ctx.beginPath();
+                ctx.roundRect(4, 2, 20, 9, 4);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.restore();
+                ctx.restore();
+            }
+
+            /**
+             * Helper untuk menggambar kaki berotot hewan berkaki empat (Harimau, Serigala, Singa)
+             */
+            drawBeastQuadLeg(ctx, hipX, hipY, angle, legColor, pawColor) {
+                ctx.save();
+                ctx.translate(hipX, hipY);
+                ctx.rotate(angle);
+
+                ctx.fillStyle = legColor;
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                ctx.roundRect(-5, 0, 10, 17, 5);
+                ctx.fill();
+                ctx.stroke();
+
+                // Cakar / Telapak Kaki Hewan
+                ctx.fillStyle = pawColor;
+                ctx.beginPath();
+                ctx.ellipse(2, 17, 7, 4, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            drawBossGuardian(ctx, x, y) {
+                ctx.save();
+                const pulse = Math.sin(this.worldDistance * 0.08) * 3;
+                ctx.translate(x, y + pulse);
+                // Gambar Raja Singa Penjaga Harta Karun Menghadap Kiri (Ke Arah Pemain)
+                ctx.scale(-1.15, 1.15);
+                this.drawRealisticLion(ctx, this.worldDistance * 0.08);
+                ctx.restore();
+            }
+
+            drawTreasureAndFinish(ctx, x, h) {
+                const topY = h * 0.54;
+                const botY = h * 0.94;
+
+                // Tiang Bendera Finish 🏁
+                ctx.fillStyle = "#f8fafc";
+                ctx.fillRect(x, topY, 8, botY - topY);
+
+                // Peti Harta Karun 💎
+                ctx.save();
+                ctx.translate(x + 38, h * 0.76);
+                ctx.fillStyle = "#b45309";
+                ctx.strokeStyle = "#451a03";
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.roundRect(-24, -18, 48, 32, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = "#fbbf24";
+                ctx.fillRect(-24, -4, 48, 6);
+
+                if (this.treasureOpen) {
+                    ctx.font = "28px sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.fillText("💎💎💎", 0, -26);
+                }
+                ctx.restore();
+            }
+
+            drawCartoonTree(ctx, x, groundY, scale, foliageColor) {
+                ctx.save();
+                ctx.translate(x, groundY);
+                ctx.scale(scale, scale);
+
+                // Batang Pohon
+                ctx.fillStyle = "#78350f";
+                ctx.beginPath();
+                ctx.roundRect(-10, -55, 20, 58, 5);
+                ctx.fill();
+
+                // Daun Pohon Rimbun Berlapis 3D
+                ctx.fillStyle = foliageColor;
+                ctx.beginPath();
+                ctx.arc(0, -85, 38, 0, Math.PI * 2);
+                ctx.arc(-24, -68, 26, 0, Math.PI * 2);
+                ctx.arc(24, -68, 26, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            drawBush(ctx, x, y, w, color) {
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y, w * 0.28, 0, Math.PI * 2);
+                ctx.arc(x + w * 0.25, y - 4, w * 0.34, 0, Math.PI * 2);
+                ctx.arc(x + w * 0.52, y, w * 0.26, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            drawCloud(ctx, x, y, scale) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.scale(scale, scale);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+                ctx.beginPath();
+                ctx.arc(0, 0, 22, 0, Math.PI * 2);
+                ctx.arc(22, -6, 28, 0, Math.PI * 2);
+                ctx.arc(48, 0, 20, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            drawBird(ctx, x, y, phase) {
+                const wingY = Math.sin(phase) * 5;
+                ctx.strokeStyle = "#1e293b";
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(x - 8, y + wingY);
+                ctx.quadraticCurveTo(x - 4, y - 4, x, y);
+                ctx.quadraticCurveTo(x + 4, y - 4, x + 8, y + wingY);
+                ctx.stroke();
+            }
+        }
+
+        // Jalankan game saat halaman dimuat
+        let game;
+        window.onload = function () {
+            game = new AdventureDecimalGame();
+        };
+    </script>
+</body>
+</html>
